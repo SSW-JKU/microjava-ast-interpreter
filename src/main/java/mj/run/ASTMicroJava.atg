@@ -1,0 +1,587 @@
+//package name
+$package=mj.run
+//symboltable of CoCo/R
+$s
+
+// import clauses in Java
+import mj.impl.*;
+import mj.impl.Statement.*;
+import mj.impl.Expr.*;
+import mj.symtab.Struct;
+import mj.impl.Tab;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+COMPILER ASTMircoJava
+
+ /**
+   * Maximum number of global variables per program
+   */
+  private static final int MAX_GLOBALS = 32767;
+
+  /**
+   * Maximum number of fields per class
+   */
+  private static final int MAX_FIELDS = 32767;
+
+  /**
+   * Maximum number of local variables per method
+   */
+  private static final int MAX_LOCALS = 127;
+
+
+  public final Tab tab = new Tab(this);
+
+  private Obj curMethod = Tab.noObj;
+
+  private char parseChar(String val) {
+
+    char ch = ' ';
+
+    if (val.charAt(1) != '\\') {
+        ch = val.charAt(1);
+    }
+    else {
+        switch (val.charAt(2)) {
+            case 'r' : ch = '\r'; break;
+            case 'n' : ch = '\n'; break;
+            case '\'': ch = '\''; break;
+            case '\\': ch = '\\'; break;
+        }
+    }
+    return ch;
+  }
+
+  public Ident.Kind getIdentKind(Obj var) {
+
+      Ident.Kind kind;
+
+      switch (var.kind) {
+          case Con:
+              kind = Ident.Kind.Con;
+              break;
+          case Var:
+              if (var.level == 0) {
+                  kind = Ident.Kind.Static;
+              }
+              else {
+                  kind = Ident.Kind.Local;
+              }
+              break;
+          case Meth:
+              kind = Ident.Kind.Meth;
+              break;
+          default:
+              kind = Ident.Kind.None;
+              SemErr("cannot create code operand for this kind of symbol table object");
+      }
+      return kind;
+  }
+
+  Expr load(Designator designator) {
+        switch (designator.kind) {
+            case Con:
+            case Local:
+            case Static:
+            case Meth:
+                //value already on stack -> nothing to load
+                break;
+            case Fld:
+                designator.addExpr(new LoadFld(0, designator.offset));
+                break;
+            case Elem:
+                designator.addExpr(new LoadElem(0));
+                break;
+            default:
+                SemErr("value expected");
+                break;
+        }
+        return null;
+    }
+
+  Expr loadExpr(Expr expr) {
+        switch (expr.kind) {
+            case Con:
+            case Local:
+            case Static:
+            case Meth:
+                //value already on stack -> nothing to load
+                return expr;
+            case Fld:
+                return new LoadFld(0, expr, expr.offset);
+            case Elem:
+                return new LoadElem(0, expr);
+            default:
+                SemErr("value expected");
+                return expr;
+        }
+    }
+
+CHARACTERS
+// Declare character sets (such as letter or digit).
+digit = '0'..'9'.
+letter = 'a'..'z' + 'A'..'Z'.
+anyButApostrophe = ANY - '\''.
+eol = '\n'.
+
+TOKENS
+// Specify the tokens (or terminalsymbols) of the language by using the character sets defined above.
+number = digit {digit}.
+charConst = '\'' (anyButApostrophe | '\\' ( 'r' | 'n' | '\'' | '\\' ) ) '\''.
+ident = letter { letter | digit | '_' }.
+
+COMMENTS FROM "/*" TO "*/" NESTED
+COMMENTS FROM "//" TO eol
+
+IGNORE '\t' + '\r' + '\n' + ' '
+
+PRODUCTIONS
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ASTMircoJava<out Node program>
+= "program"
+ident                   (.Obj prog = tab.insert(Obj.Kind.Prog, t.val, Tab.noType);
+                          prog.setLine(t.line);
+                          tab.openScope();.)
+{
+    ConstDecl
+    |
+    VarDecl
+    |
+    ClassDecl
+}                       (.if (tab.curScope.nVars() > MAX_GLOBALS) { SemErr("too many global variables"); }.)
+"{"
+{
+    MethodDecl
+}
+"}"                     (.Obj main = tab.curScope.findGlobal("main");
+                          if (main == null || main.kind != Obj.Kind.Meth) { SemErr("method main not found"); }
+                          prog.setMain(new CallStat(t.line, main));
+                          prog.locals = tab.curScope.locals();
+                          tab.closeScope();
+                          program = prog;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ConstDecl               (.Struct type;.)
+= "final"
+Type<out type>
+ident                   (.Obj con = tab.insert(Obj.Kind.Con, t.val, type);
+                          con.setLine(t.line);.)
+ "="
+(                       (.if (!type.equals(Tab.intType)) { SemErr("value does not match constant type"); }.)
+    number              (.con.val = Integer.parseInt(t.val);.)
+    |                   (.if (!type.equals(Tab.charType)) { SemErr("value does not match constant type"); }.)
+    charConst           (.con.val = parseChar(t.val);.)
+)
+";"
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+VarDecl
+=                       (.Struct type;
+                          Obj var;.)
+Type<out type>
+ident                   (.var = tab.insert(Obj.Kind.Var, t.val, type);
+                          var.setLine(t.line);.)
+{
+    ","
+    ident               (.var = tab.insert(Obj.Kind.Var, t.val, type);
+                          var.setLine(t.line);.)
+}
+";"
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ClassDecl
+= "class"
+ident                   (.Obj clazz = tab.insert(Obj.Kind.Type, t.val, new Struct(Struct.Kind.Class));
+                          clazz.setLine(t.line);.)
+"{"                     (.tab.openScope();.)
+{
+    VarDecl             (.if (tab.curScope.nVars() > MAX_FIELDS) { SemErr("too many fields"); }.)
+}                       (.clazz.type.fields = tab.curScope.locals();
+                          tab.closeScope();.)
+"}"
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MethodDecl              (.Stat block;.)
+=                       (.Struct type = Tab.noType;.)
+(
+    Type<out type>      (. if (type.isRefType()) { SemErr("methods may only return int or char"); }.)
+    |
+    "void"
+)
+ident                   (.String methodName = t.val;
+                          curMethod = tab.insert(Obj.Kind.Meth, methodName, type);
+                          curMethod.setLine(t.line);
+                          tab.openScope();.)
+"("
+[
+    FormPars
+]
+")"                     (.curMethod.nPars = tab.curScope.nVars();
+                          if (methodName.equals("main")) {
+                                if (!type.isEqual(Tab.noType)) { SemErr("main method must return void"); }
+                                if (curMethod.nPars > 0) { SemErr("main method must not have any parameters"); }
+                          }.)
+{
+    VarDecl
+}                       (.curMethod.locals = tab.curScope.locals();.)
+Block<out block, false> (.curMethod.block = (Block)block;
+                          tab.closeScope();.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+FormPars
+=                       (.Struct type;
+                          Obj param;.)
+Type<out type>
+ident                   (.param = tab.insert(Obj.Kind.Var, t.val, type);
+                          param.setLine(t.line);.)
+{
+    ","
+    Type<out type>
+    ident               (.param = tab.insert(Obj.Kind.Var, t.val, type);
+                          param.setLine(t.line);.)
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Type<out Struct type>
+=
+ident                   (.Obj obj = tab.find(t.val);
+                          if (obj.kind != Obj.Kind.Type) { SemErr("type expected"); }
+                          type = obj.type;.)
+[
+    "["
+    "]"                 (.type = new Struct(type);.)
+]
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Block<out Stat node, boolean inLoop>
+                        (.Stat stat;
+                          Block block = new Block(0);.)
+=
+"{"                     (.block.setLine(t.line);.)
+{
+    Statement<out stat, inLoop>
+                        (.block.add(stat);.)
+}
+"}"                     (.node = block;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Statement<out Stat node, boolean inLoop>
+                        (.node = null;
+                          Operator op;
+                          Expr expr;
+                          Expr cond;
+                          Designator var;
+                          Stat stat;
+                          List<Expr> param;
+                          int lineOfOp;
+                          int lineOfCall;
+                          int lineOfWhile;
+                          int lineOfBreak;
+                          int lineOfIf;
+                          int lineOfPrint;
+                          int lineOfRead;.)
+= Designator<out var>   (.lineOfCall = t.line;.)
+(
+    Assignop<out op>    (.lineOfOp = t.line;.)
+    Expr<out expr>      (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.getObj().name); }
+                          if (op == Operator.ASSIGN) {
+                            if (!expr.type.assignableTo(var.type)) { SemErr("incompatible types"); }
+                          }
+                          else {
+                            if (var.type != Tab.intType || var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          }
+                          switch (op) {
+                            case ASSIGN:
+                                node = new Assignment(lineOfOp, var, loadExpr(expr));
+                                break;
+                            case PLUSAS:
+                                node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.ADD ,loadExpr(expr)));
+                                break;
+                            case MINUSAS:
+                                node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.SUB ,loadExpr(expr)));
+                                break;
+                            case TIMESAS:
+                                node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.MUL ,loadExpr(expr)));
+                                break;
+                            case SLASHAS:
+                                node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.DIV ,loadExpr(expr)));
+                                break;
+                            case REMAS:
+                                node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.REM ,loadExpr(expr)));
+                                break;
+                          }.)
+    |
+    ActPars<out param, var>
+                        (.node = new CallStat(lineOfCall, var, param);.)
+    |
+    "++"                (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
+                          if (var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          node = new Assignment(t.line, var, new BinExpr(t.line, loadExpr(var), Operator.ADD, new IntCon(t.line, 1)));.)
+    |
+    "--"                (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
+                          if (var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          node = new Assignment(t.line, var, new BinExpr(t.line, loadExpr(var), Operator.SUB, new IntCon(t.line, 1)));.)
+)
+";"
+|
+"if"                    (.lineOfIf = t.line;.)
+"("
+Condition<out cond>
+")"
+Statement<out stat, inLoop>
+                        (.node = new If(lineOfIf, cond, stat);.)
+[
+    "else"              (.lineOfIf = t.line;.)
+    Statement<out stat, inLoop>
+                        (.node = new ElseIf(lineOfIf, (If)node, stat);.)
+]
+|
+"while"                 (.lineOfWhile = t.line;.)
+"("
+Condition<out cond>
+")"
+Statement<out stat, true>
+                        (.node = new While(lineOfWhile, cond, stat);.)
+|
+"break"                 (.lineOfBreak = t.line;.)
+";"                     (.if (!inLoop) { SemErr("break is not within a loop"); }
+                          node = new Break(lineOfBreak);.)
+|
+"return"                (.node = new Return(t.line);.)
+[
+    Expr<out expr>      (.if (curMethod.type == Tab.noType) { SemErr("void method must not return a value"); }
+                          node = new Return(t.line, loadExpr(expr));.)
+]                       (.else if (curMethod.type != Tab.noType) { SemErr("return expression required"); }.)
+";"
+|
+"read"                  (.lineOfRead = t.line;.)
+"("
+Designator<out var>     (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
+                          if (var.type == Tab.intType) { node = new IntRead(lineOfRead, var); }
+                          else if (var.type == Tab.charType) { node = new CharRead(lineOfRead, var); }
+                          else { SemErr("can only read int or char values"); }.)
+")"
+";"
+|                       (.int width = 0;.)
+"print"                 (.lineOfPrint = t.line;.)
+"("
+Expr<out expr>          (.if (expr.type != Tab.intType && expr.type != Tab.charType) { SemErr("can only print int or char values " + expr.type); }.)
+[
+    ","
+    number              (.width = Integer.parseInt(t.val);.)
+]                       (.if (expr.type == Tab.intType) { node = new IntPrint(lineOfPrint, loadExpr(expr), width); }
+                          else { node = new CharPrint(lineOfPrint, loadExpr(expr), width); }.)
+")"
+";"
+|
+Block<out node, inLoop>
+|
+    ";"                 (.node = new Semicolon(t.line);.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Assignop<out Operator op>
+                        (.op = Operator.NOOP;.)
+= "="                   (.op = Operator.ASSIGN;.)
+|
+"+="                    (.op = Operator.PLUSAS;.)
+|
+"-="                    (.op = Operator.MINUSAS;.)
+|
+"*="                    (.op = Operator.TIMESAS;.)
+|
+"/="                    (.op = Operator.SLASHAS;.)
+|
+"%="                    (.op = Operator.REMAS;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ActPars<.out List<Expr> param, Designator designator.>
+                        (.param = new ArrayList<Expr>();
+                          Expr expr;
+                          Obj meth;.)
+= "("                   (.if (designator.kind != Expr.Kind.Meth) { SemErr("called object is not a method"); }
+                          meth = designator.getObj();
+                          int aPars = 0;
+                          int fPars = meth.nPars;
+                          Iterator<Obj> pars = meth.locals.values().iterator();
+		                  Obj fp = Tab.noObj;.)
+[
+    Expr<out expr>      (.param.add(loadExpr(expr));
+                          aPars++;
+                          if (pars.hasNext()) {
+                            fp = pars.next();
+                            if (!expr.type.assignableTo(fp.type)) { SemErr("parameter type mismatch"); }
+                          }.)
+    {
+        ","
+        Expr<out expr>  (.param.add(loadExpr(expr));
+                          aPars++;
+                          if (pars.hasNext()) {
+                            fp = pars.next();
+                            if (!expr.type.assignableTo(fp.type)) { SemErr("parameter type mismatch"); }
+                          }.)
+    }
+]                       (.if (aPars > fPars) { SemErr("more actual than formal parameters"); }.)
+                        (.if (aPars < fPars) { SemErr("less actual than formal parameters"); }.)
+")"
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Condition<out Expr cond>
+                        (.Expr cond2;
+                          int lineOfOp;.)
+= CondTerm<out cond>
+{
+    "||"                (.lineOfOp = t.line;.)
+    CondTerm<out cond2> (.cond = new BinExpr(lineOfOp, loadExpr(cond), Operator.OR, loadExpr(cond2));.)
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CondTerm<out Expr cond>
+                        (.Expr cond2;
+                          int lineOfOp;.)
+= CondFact<out cond>
+{
+    "&&"                (.lineOfOp = t.line;.)
+    CondFact<out cond2> (.cond = new BinExpr(lineOfOp, loadExpr(cond), Operator.AND, loadExpr(cond2));.)
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CondFact<out Expr cond> (.Expr cond2;
+                          Operator op;
+                          int lineOfOp;.)
+= Expr<out cond>
+Relop<out op>           (.lineOfOp = t.line;.)
+Expr<out cond2>         (.if (!cond.type.compatibleWith(cond2.type)) { SemErr("incompatible types"); }
+                          if ((cond.type.isRefType() || cond2.type.isRefType())
+                                && op != Operator.EQL
+                                && op != Operator.NEQ) { SemErr("only (un)equality checks are allowed for reference types"); }
+                          cond = new BinExpr(lineOfOp, loadExpr(cond), op, loadExpr(cond2));.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Relop<out Operator op>  (.op = Operator.NOOP;.)
+= "=="                  (.op = Operator.EQL;.)
+|
+"!="                    (.op = Operator.NEQ;.)
+|
+">"                     (.op = Operator.GTR;.)
+|
+">="                    (.op = Operator.GEQ;.)
+|
+"<"                     (.op = Operator.LSS;.)
+|
+"<="                    (.op = Operator.LEQ;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Expr<out Expr expr>     (.Operator op;
+                          Expr expr2;
+                          boolean sign = false;
+                          int lineOfSign = 0;
+                          int lineOfOp = 0;.)
+=
+[
+    "-"                 (.sign = true;
+                          lineOfSign = t.line;.)
+]
+Term<out expr>          (.if (sign) {
+                              if (expr.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                              expr = new UnaryExpr(lineOfSign, Operator.SUB, loadExpr(expr));
+                          }.)
+{
+    Addop<out op>       (.lineOfOp = t.line;.)
+    Term<out expr2>     (.if (expr.type != Tab.intType || expr2.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          expr = new BinExpr(lineOfOp, loadExpr(expr), op, loadExpr(expr2));.)
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Term<out Expr expr>     (.Operator op;
+                          Expr expr2;
+                          int lineOfOp;.)
+= Factor<out expr>
+{
+    Mulop<out op>       (.lineOfOp = t.line;.)
+    Factor<out expr2>   (.if (expr.type != Tab.intType || expr2.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          expr = new BinExpr(lineOfOp, loadExpr(expr), op, loadExpr(expr2));.)
+    |
+    "**"                (.lineOfOp = t.line;.)
+    number              (.expr = loadExpr(expr);
+                          if (expr.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                          expr = new BinExpr(lineOfOp, expr, Operator.EXP, new IntCon(t.line, t.val));.)
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Factor<out Expr expr>   (.expr = new IntCon(t.line, 0);
+                          List<Expr> param;
+                          int lineOfCall;
+                          int lineOfNew;.)
+= Designator<out expr>  (.lineOfCall = t.line;.)
+[                       (.if (expr.type == Tab.noType) { SemErr("invalid call of void method"); }.)
+    ActPars<out param, (Designator)expr>
+                        (.expr = new Call(lineOfCall, (Designator) expr, param);.)
+]
+|
+number                  (.expr = new IntCon(t.line, t.val);.)
+|
+charConst               (.expr = new CharCon(t.line, t.val, parseChar(t.val));.)
+|
+"new"                   (.lineOfNew = t.line;.)
+ident                   (.Obj obj = tab.find(t.val);
+                          Struct type = obj.type;
+                          if (obj.kind != Obj.Kind.Type) { SemErr("type expected"); }.)
+[
+    "["
+    Expr<out expr>      (.if (expr.type != Tab.intType) { SemErr("array size must be an integer"); }
+                          expr = new NewArray(lineOfNew, obj, expr);.)
+    "]"
+]                       (.else {
+                            if (type.kind != Struct.Kind.Class) { SemErr("class type expected"); }
+                            expr = new New(lineOfNew, obj);
+                          }.)
+|
+"("
+Expr<out expr>
+")"
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Designator<out Designator node>
+                        (.Ident ident;
+                          Expr expr;
+                          Expr loadNode;
+                          Obj obj;.)
+= ident                 (.obj = tab.find(t.val);
+		                  node = new Designator(t.line, new Ident(t.line, obj, getIdentKind(obj)));.)
+{                       (.if (node.type.kind != Struct.Kind.Class) { SemErr("dereferenced object is not a class"); }.)
+    "."
+    ident               (.load(node);
+                          obj = tab.findField(t.val, node.type);
+				          node.kind = Expr.Kind.Fld;
+                          node.type = obj.type;
+                          node.offset = obj.adr;.)
+    |
+    "["
+    Expr<out expr>      (.if (node.type.kind != Struct.Kind.Arr) { SemErr("indexed object is not an array"); }
+                          if (expr.type != Tab.intType) { SemErr("array index must be an integer"); }
+                          load(node);
+                          node.addExpr(loadExpr(expr));
+                          node.kind = Expr.Kind.Elem;
+                          node.type = node.type.elemType;.)
+    "]"
+}
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Addop<out Operator op>  (.op = Operator.NOOP;.)
+= "+"                   (.op = Operator.ADD;.)
+|
+"-"                     (.op = Operator.SUB;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Mulop<out Operator op>  (.op = Operator.NOOP;.)
+= "*"                   (.op = Operator.MUL;.)
+|
+"/"                     (.op = Operator.DIV;.)
+|
+"%"                     (.op = Operator.REM;.)
+.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+END ASTMircoJava.

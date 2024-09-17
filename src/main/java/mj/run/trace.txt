@@ -1,0 +1,77 @@
+Symbol Table:
+------------
+
+ nr name           typ  hasAt graph  del   line tokenKind
+  0 EOF            t    false                 0 fixedToken
+  1 number         t    false               131 classToken
+  2 charConst      t    false               132 classToken
+  3 ident          t    false               133 classLitToken
+  4 "program"      t    false               144 litToken
+  5 "{"            t    false               155 fixedToken
+  6 "}"            t    false               159 fixedToken
+  7 "final"        t    false               168 litToken
+  8 "="            t    false               172 fixedToken
+  9 ";"            t    false               178 fixedToken
+ 10 ","            t    false               188 fixedToken
+ 11 "class"        t    false               196 litToken
+ 12 "void"         t    false               212 litToken
+ 13 "("            t    false               218 fixedToken
+ 14 ")"            t    false               222 fixedToken
+ 15 "["            t    false               254 fixedToken
+ 16 "]"            t    false               255 fixedToken
+ 17 "++"           t    false               320 fixedToken
+ 18 "--"           t    false               324 fixedToken
+ 19 "if"           t    false               330 litToken
+ 20 "else"         t    false               337 litToken
+ 21 "while"        t    false               342 litToken
+ 22 "break"        t    false               349 litToken
+ 23 "return"       t    false               353 litToken
+ 24 "read"         t    false               360 litToken
+ 25 "print"        t    false               369 litToken
+ 26 "+="           t    false               389 fixedToken
+ 27 "-="           t    false               391 fixedToken
+ 28 "*="           t    false               393 fixedToken
+ 29 "/="           t    false               395 fixedToken
+ 30 "%="           t    false               397 fixedToken
+ 31 "||"           t    false               436 fixedToken
+ 32 "&&"           t    false               446 fixedToken
+ 33 "=="           t    false               464 fixedToken
+ 34 "!="           t    false               466 fixedToken
+ 35 ">"            t    false               468 fixedToken
+ 36 ">="           t    false               470 fixedToken
+ 37 "<"            t    false               472 fixedToken
+ 38 "<="           t    false               474 fixedToken
+ 39 "-"            t    false               484 fixedToken
+ 40 "**"           t    false               507 fixedToken
+ 41 "new"          t    false               528 litToken
+ 42 "."            t    false               555 fixedToken
+ 43 "+"            t    false               574 fixedToken
+ 44 "*"            t    false               580 fixedToken
+ 45 "/"            t    false               582 fixedToken
+ 46 "%"            t    false               584 fixedToken
+ 47 ???            t    false                 0 fixedToken
+  0 ASTMircoJava   nt   false     1 false   143 fixedToken
+  1 ConstDecl      nt   false    17 false   167 fixedToken
+  2 VarDecl        nt   false    31 false   181 fixedToken
+  3 ClassDecl      nt   false    40 false   195 fixedToken
+  4 MethodDecl     nt   false    50 false   207 fixedToken
+  5 Type           nt   false    77 false   248 fixedToken
+  6 FormPars       nt   false    68 false   234 fixedToken
+  7 Block          nt   true     83 false   259 fixedToken
+  8 Statement      nt   true    119 false   271 fixedToken
+  9 Designator     nt   false   284 false   547 fixedToken
+ 10 Assignop       nt   false   173 false   385 fixedToken
+ 11 Expr           nt   false   236 false   477 fixedToken
+ 12 ActPars        nt   true    187 false   400 fixedToken
+ 13 Condition      nt   false   199 false   431 fixedToken
+ 14 CondTerm       nt   false   205 false   441 fixedToken
+ 15 CondFact       nt   false   211 false   451 fixedToken
+ 16 Relop          nt   false   220 false   463 fixedToken
+ 17 Term           nt   false   244 false   498 fixedToken
+ 18 Addop          nt   false   301 false   573 fixedToken
+ 19 Factor         nt   false   264 false   514 fixedToken
+ 20 Mulop          nt   false   307 false   579 fixedToken
+
+Literal Tokens:
+--------------
+
