@@ -17,11 +17,11 @@ public class Interpreter {
     private static final int heapSize = 100000, // size of the heap in words
             mStackSize = 4000, // size of the method stack in words
             eStackSize = 30; // size of expression stack in words
-    Node program;
-    boolean debug;
-    Object lock;
-    Obj curMethod;
-    int lineOfExecution;
+    private final Node program;
+    private boolean debug;
+    private Object lock;
+    private Obj curMethod;
+    private int lineOfExecution;
 
     public Interpreter(Node program) {
         this.program = program;
@@ -152,7 +152,7 @@ public class Interpreter {
         return heap[adr];
     }
     public int getLocal(int adr) {
-        return  local[fp + adr];
+        return local[fp + adr];
     }
     public void printHeap() {
         System.out.println("Heap data:");

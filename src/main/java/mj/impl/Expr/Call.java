@@ -66,7 +66,7 @@ public class Call extends Expr {
 
             try {
                 methodToCall.execute(interpreter);
-            } catch (ReturnException exp) {
+            } catch (ReturnException ex) {
                 //return case
                 interpreter.freeMethodStack();
                 return;

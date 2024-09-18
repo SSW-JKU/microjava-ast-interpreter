@@ -10,13 +10,13 @@ public class AbstractSyntaxTree {
     public static final String TREE_FILENAME = "tree.dot";
     public static final String SVG_FILENAME = "tree.svg";
     public final String filename;
-    Interpreter interpreter;
-    boolean compileError;
+    private Interpreter interpreter;
+    private final boolean compileError;
 
     public AbstractSyntaxTree(String filename) {
         this.filename = filename;
 
-        System.out.println("___________________________");
+        System.out.println("----------------------------------");
         System.out.println("Abstract Syntax Tree for MicroJava");
         System.out.printf("   Reading source file %s%n", filename);
         Scanner scanner = new Scanner(filename);
@@ -40,10 +40,12 @@ public class AbstractSyntaxTree {
     public void run() throws ControlFlowException {
         if (isCompiled()) {
             interpreter.run();
-            interpreter.printData();
-            interpreter.printHeap();
-            interpreter.printMethodStack();
-            interpreter.printExpressionStack();
+            if (interpreter.isDebug()) {
+                interpreter.printData();
+                interpreter.printHeap();
+                interpreter.printMethodStack();
+                interpreter.printExpressionStack();
+            }
         }
     }
     public static void writeASTToFile(Node root) {

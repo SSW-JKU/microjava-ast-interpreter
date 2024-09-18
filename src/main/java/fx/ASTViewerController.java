@@ -109,7 +109,7 @@ public class ASTViewerController {
                             setStyle("");
                         } else {
                             setText(item);
-                            if (ast != null && getIndex() == ast.getInterpreter().getLineOfExecution() - 1) {
+                            if (ast != null && ast.getInterpreter() != null && getIndex() == ast.getInterpreter().getLineOfExecution() - 1) {
                                 setStyle("-fx-background-color: red;");
                             } else {
                                 setStyle("");
@@ -152,14 +152,12 @@ public class ASTViewerController {
 
 
     }
-
     private void setSymTabCellFactory(TableView<TabItem> tableView) {
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("address"));
         tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("type"));
         tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("value"));
     }
-
     @FXML
     public void step() {
         synchronized (lock) {
@@ -169,7 +167,6 @@ public class ASTViewerController {
         listView.refresh();
         fillSymTab();
     }
-
     @FXML
     public void debug() {
         ast.setDebug(true, lock);
@@ -179,7 +176,6 @@ public class ASTViewerController {
         stepButton.setDisable(false);
         run();
     }
-
     @FXML
     public void compile() {
         ast = new AbstractSyntaxTree(selectedFile.getAbsolutePath());
@@ -189,16 +185,13 @@ public class ASTViewerController {
             treeView.setRoot(item);
             runButton.setDisable(false);
             debugButton.setDisable(false);
-
             fillSymTab();
         }
     }
-
     public void fillSymTab() {
         fillGlobalSymTab();
         fillLocalSymTab();
     }
-
     public void fillGlobalSymTab() {
         globalSymTab.getItems().clear();
 
@@ -213,7 +206,6 @@ public class ASTViewerController {
         }
         globalSymTab.refresh();
     }
-
     public void fillLocalSymTab() {
 
         localSymTab.getItems().clear();
@@ -232,20 +224,18 @@ public class ASTViewerController {
         }
         localSymTab.refresh();
     }
-
     private void loadSVG() {
         oldZoom = webView.getZoom();
         oldScroll = (String) webView.getEngine().executeScript("window.scrollX + ',' + window.scrollY");
         String svgContent;
         try {
-            svgContent = new String(Files.readAllBytes(Paths.get("tree.svg")));
+            svgContent = new String(Files.readAllBytes(Paths.get(AbstractSyntaxTree.SVG_FILENAME)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         String svg = "<html><body>%s</body></html>".formatted(svgContent);
         webView.getEngine().loadContent(svg);
     }
-
     @FXML
     public void run() {
         Thread thread = new Thread(() -> {
@@ -269,14 +259,12 @@ public class ASTViewerController {
             webView.setZoom(newZoom);
         }
     }
-
     @FXML
     public void ctrlPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.CONTROL) {
             ctrlPressed = true;
         }
     }
-
     @FXML
     public void ctrlReleased(KeyEvent event) {
         if (event.getCode() == KeyCode.CONTROL) {
@@ -297,6 +285,12 @@ public class ASTViewerController {
         selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
+
+            listView.getItems().clear();
+            treeView.setRoot(null);
+            globalSymTab.getItems().clear();
+            localSymTab.getItems().clear();
+
             Scanner scanner;
             try {
                 scanner = new Scanner(selectedFile);
@@ -305,7 +299,6 @@ public class ASTViewerController {
             }
 
             List<String> sourceCode = new ArrayList<>();
-
             while (scanner.hasNextLine()) {
                 sourceCode.add(scanner.nextLine());
             }

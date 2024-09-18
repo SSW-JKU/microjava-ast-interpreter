@@ -1,815 +1,91 @@
 digraph G {
-node0 [label = "Program (StudentList)"]
+node0 [label = "Program (Max)"]
 node0 -> node1
-node1 [label = "Con (20)"]
-node0 -> node2
-node2 [label = "Type (Student [class])"]
-node2 -> node3
-node3 [label = "Var (matrNr)"]
-node2 -> node4
-node4 [label = "Var (name [arr])"]
-node0 -> node5
-node5 [label = "Var (list [arr])"]
-node0 -> node6
-node6 [label = "Var (stCnt)"]
-node0 -> printString
-printString [label = "Method (printString)"]
-subgraph cluster_printString {
-printString -> node8
-node8 [label = "Var (str [arr])"]
-printString -> node9
-node9 [label = "Var (i)"]
-printString -> node10
-node10 [label = "Block", color = "black"]
-node10 -> node11
-node11 [label = "If", color = "black"]
+node1 [label = "Var (ref)"]
+node0 -> max
+max [label = "Method (max)"]
+subgraph cluster_max {
+max -> node3
+node3 [label = "Var (a)"]
+max -> node4
+node4 [label = "Var (b)"]
+max -> node5
+node5 [label = "Block", color = "black"]
+node5 -> node6
+node6 [label = "ElseIf", color = "black"]
+node6 -> node7
+node7 [label = "If", color = "black"]
+node7 -> node8
+node8 [label = "BinExpr (>)", color = "black"]
+node8 -> node9
+node9 [label = "Designator (Kind: Local)", color = "black"]
+node9 -> node10
+node10 [label = "Ident (a [Local])", color = "black"]
+node8 -> node11
+node11 [label = "Designator (Kind: Local)", color = "black"]
 node11 -> node12
-node12 [label = "BinExpr (!=)", color = "black"]
-node12 -> node13
-node13 [label = "Designator (Kind: Local)", color = "black"]
+node12 [label = "Ident (b [Local])", color = "black"]
+node7 -> node13
+node13 [label = "Block", color = "black"]
 node13 -> node14
-node14 [label = "Ident (str [Local])", color = "black"]
-node12 -> node15
-node15 [label = "Designator (Kind: Con)", color = "black"]
+node14 [label = "Return", color = "black"]
+node14 -> node15
+node15 [label = "Designator (Kind: Local)", color = "black"]
 node15 -> node16
-node16 [label = "Ident (null [Con])", color = "black"]
-node11 -> node17
+node16 [label = "Ident (a [Local])", color = "black"]
+node6 -> node17
 node17 [label = "Block", color = "black"]
 node17 -> node18
-node18 [label = "Assignment", color = "black"]
+node18 [label = "Return", color = "black"]
 node18 -> node19
 node19 [label = "Designator (Kind: Local)", color = "black"]
 node19 -> node20
-node20 [label = "Ident (i [Local])", color = "black"]
-node18 -> node21
-node21 [label = "IntCon (0)", color = "black"]
-node17 -> node22
-node22 [label = "While", color = "black"]
-node22 -> node23
-node23 [label = "BinExpr (<)", color = "black"]
-node23 -> node24
-node24 [label = "Designator (Kind: Local)", color = "black"]
-node24 -> node25
-node25 [label = "Ident (i [Local])", color = "black"]
-node23 -> node26
-node26 [label = "Call len", color = "black"]
-node26 -> node27
-node27 [label = "Designator (Kind: Local)", color = "black"]
-node27 -> node28
-node28 [label = "Ident (str [Local])", color = "black"]
-node22 -> node29
-node29 [label = "Block", color = "black"]
-node29 -> node30
-node30 [label = "CharPrint (width = 0)", color = "black"]
-node30 -> node31
-node31 [label = "LoadElem", color = "black"]
-node31 -> node32
-node32 [label = "Designator (Kind: Elem)", color = "black"]
-node32 -> node33
-node33 [label = "Ident (str [Local])", color = "black"]
-node32 -> node34
-node34 [label = "Designator (Kind: Local)", color = "black"]
-node34 -> node35
-node35 [label = "Ident (i [Local])", color = "black"]
-node29 -> node36
-node36 [label = "Assignment", color = "black"]
-node36 -> node37
-node37 [label = "Designator (Kind: Local)", color = "black"]
-node37 -> node38
-node38 [label = "Ident (i [Local])", color = "black"]
-node36 -> node39
-node39 [label = "BinExpr (+)", color = "black"]
-node39 -> node40
-node40 [label = "Designator (Kind: Local)", color = "black"]
-node40 -> node41
-node41 [label = "Ident (i [Local])", color = "black"]
-node39 -> node42
-node42 [label = "IntCon (1)", color = "black"]
-}
-node0 -> init
-init [label = "Method (init)"]
-subgraph cluster_init {
-init -> node44
-node44 [label = "Block", color = "black"]
-node44 -> node45
-node45 [label = "Assignment", color = "black"]
-node45 -> node46
-node46 [label = "Designator (Kind: Static)", color = "black"]
-node46 -> node47
-node47 [label = "Ident (list [Static])", color = "black"]
-node45 -> node48
-node48 [label = "NewArray", color = "black"]
-node48 -> node49
-node49 [label = "Type (Student [class])"]
-node49 -> node50
-node50 [label = "Var (matrNr)"]
-node49 -> node51
-node51 [label = "Var (name [arr])"]
-node48 -> node52
-node52 [label = "Designator (Kind: Con)", color = "black"]
-node52 -> node53
-node53 [label = "Ident (MAXLEN [Con])", color = "black"]
-node44 -> node54
-node54 [label = "Assignment", color = "black"]
-node54 -> node55
-node55 [label = "Designator (Kind: Static)", color = "black"]
-node55 -> node56
-node56 [label = "Ident (stCnt [Static])", color = "black"]
-node54 -> node57
-node57 [label = "IntCon (0)", color = "black"]
-}
-node0 -> add
-add [label = "Method (add)"]
-subgraph cluster_add {
-add -> node59
-node59 [label = "Type (s [class])"]
-add -> node60
-node60 [label = "Var (i)"]
-add -> node61
-node61 [label = "Block", color = "black"]
-node61 -> node62
-node62 [label = "Assignment", color = "black"]
-node62 -> node63
-node63 [label = "Designator (Kind: Local)", color = "black"]
-node63 -> node64
-node64 [label = "Ident (i [Local])", color = "black"]
-node62 -> node65
-node65 [label = "BinExpr (-)", color = "black"]
-node65 -> node66
-node66 [label = "Designator (Kind: Static)", color = "black"]
-node66 -> node67
-node67 [label = "Ident (stCnt [Static])", color = "black"]
-node65 -> node68
-node68 [label = "IntCon (1)", color = "black"]
-node61 -> node69
-node69 [label = "While", color = "black"]
-node69 -> node70
-node70 [label = "BinExpr (&&)", color = "black"]
-node70 -> node71
-node71 [label = "BinExpr (>=)", color = "black"]
-node71 -> node72
-node72 [label = "Designator (Kind: Local)", color = "black"]
-node72 -> node73
-node73 [label = "Ident (i [Local])", color = "black"]
-node71 -> node74
-node74 [label = "IntCon (0)", color = "black"]
-node70 -> node75
-node75 [label = "BinExpr (<)", color = "black"]
-node75 -> node76
-node76 [label = "LoadFld", color = "black"]
-node76 -> node77
-node77 [label = "Designator (Kind: Fld)", color = "black"]
-node77 -> node78
-node78 [label = "Ident (s [Local])", color = "black"]
-node75 -> node79
-node79 [label = "LoadFld", color = "black"]
-node79 -> node80
-node80 [label = "Designator (Kind: Fld)", color = "black"]
-node80 -> node81
-node81 [label = "Ident (list [Static])", color = "black"]
-node80 -> node82
-node82 [label = "Designator (Kind: Local)", color = "black"]
-node82 -> node83
-node83 [label = "Ident (i [Local])", color = "black"]
-node80 -> node84
-node84 [label = "LoadElem", color = "black"]
-node69 -> node85
-node85 [label = "Block", color = "black"]
-node85 -> node86
-node86 [label = "Assignment", color = "black"]
-node86 -> node87
-node87 [label = "Designator (Kind: Elem)", color = "black"]
-node87 -> node88
-node88 [label = "Ident (list [Static])", color = "black"]
-node87 -> node89
-node89 [label = "BinExpr (+)", color = "black"]
-node89 -> node90
-node90 [label = "Designator (Kind: Local)", color = "black"]
-node90 -> node91
-node91 [label = "Ident (i [Local])", color = "black"]
-node89 -> node92
-node92 [label = "IntCon (1)", color = "black"]
-node86 -> node93
-node93 [label = "LoadElem", color = "black"]
-node93 -> node94
-node94 [label = "Designator (Kind: Elem)", color = "black"]
-node94 -> node95
-node95 [label = "Ident (list [Static])", color = "black"]
-node94 -> node96
-node96 [label = "Designator (Kind: Local)", color = "black"]
-node96 -> node97
-node97 [label = "Ident (i [Local])", color = "black"]
-node85 -> node98
-node98 [label = "Assignment", color = "black"]
-node98 -> node99
-node99 [label = "Designator (Kind: Local)", color = "black"]
-node99 -> node100
-node100 [label = "Ident (i [Local])", color = "black"]
-node98 -> node101
-node101 [label = "BinExpr (-)", color = "black"]
-node101 -> node102
-node102 [label = "Designator (Kind: Local)", color = "black"]
-node102 -> node103
-node103 [label = "Ident (i [Local])", color = "black"]
-node101 -> node104
-node104 [label = "IntCon (1)", color = "black"]
-node61 -> node105
-node105 [label = "Assignment", color = "black"]
-node105 -> node106
-node106 [label = "Designator (Kind: Elem)", color = "black"]
-node106 -> node107
-node107 [label = "Ident (list [Static])", color = "black"]
-node106 -> node108
-node108 [label = "BinExpr (+)", color = "black"]
-node108 -> node109
-node109 [label = "Designator (Kind: Local)", color = "black"]
-node109 -> node110
-node110 [label = "Ident (i [Local])", color = "black"]
-node108 -> node111
-node111 [label = "IntCon (1)", color = "black"]
-node105 -> node112
-node112 [label = "Designator (Kind: Local)", color = "black"]
-node112 -> node113
-node113 [label = "Ident (s [Local])", color = "black"]
-node61 -> node114
-node114 [label = "Assignment", color = "black"]
-node114 -> node115
-node115 [label = "Designator (Kind: Static)", color = "black"]
-node115 -> node116
-node116 [label = "Ident (stCnt [Static])", color = "black"]
-node114 -> node117
-node117 [label = "BinExpr (+)", color = "black"]
-node117 -> node118
-node118 [label = "Designator (Kind: Static)", color = "black"]
-node118 -> node119
-node119 [label = "Ident (stCnt [Static])", color = "black"]
-node117 -> node120
-node120 [label = "IntCon (1)", color = "black"]
-}
-node0 -> find
-find [label = "Method (find)"]
-subgraph cluster_find {
-find -> node122
-node122 [label = "Var (matrNr)"]
-find -> node123
-node123 [label = "Var (l)"]
-find -> node124
-node124 [label = "Var (r)"]
-find -> node125
-node125 [label = "Var (x)"]
-find -> node126
-node126 [label = "Block", color = "black"]
-node126 -> node127
-node127 [label = "Assignment", color = "black"]
-node127 -> node128
-node128 [label = "Designator (Kind: Local)", color = "black"]
-node128 -> node129
-node129 [label = "Ident (l [Local])", color = "black"]
-node127 -> node130
-node130 [label = "IntCon (0)", color = "black"]
-node126 -> node131
-node131 [label = "Assignment", color = "black"]
-node131 -> node132
-node132 [label = "Designator (Kind: Local)", color = "black"]
-node132 -> node133
-node133 [label = "Ident (r [Local])", color = "black"]
-node131 -> node134
-node134 [label = "BinExpr (-)", color = "black"]
-node134 -> node135
-node135 [label = "Designator (Kind: Static)", color = "black"]
-node135 -> node136
-node136 [label = "Ident (stCnt [Static])", color = "black"]
-node134 -> node137
-node137 [label = "IntCon (1)", color = "black"]
-node126 -> node138
-node138 [label = "While", color = "black"]
-node138 -> node139
-node139 [label = "BinExpr (&&)", color = "black"]
-node139 -> node140
-node140 [label = "BinExpr (<=)", color = "black"]
-node140 -> node141
-node141 [label = "Designator (Kind: Local)", color = "black"]
-node141 -> node142
-node142 [label = "Ident (l [Local])", color = "black"]
-node140 -> node143
-node143 [label = "Designator (Kind: Local)", color = "black"]
-node143 -> node144
-node144 [label = "Ident (r [Local])", color = "black"]
-node139 -> node145
-node145 [label = "BinExpr (!=)", color = "black"]
-node145 -> node146
-node146 [label = "Designator (Kind: Local)", color = "black"]
-node146 -> node147
-node147 [label = "Ident (matrNr [Local])", color = "black"]
-node145 -> node148
-node148 [label = "LoadFld", color = "black"]
-node148 -> node149
-node149 [label = "Designator (Kind: Fld)", color = "black"]
-node149 -> node150
-node150 [label = "Ident (list [Static])", color = "black"]
-node149 -> node151
-node151 [label = "Designator (Kind: Local)", color = "black"]
-node151 -> node152
-node152 [label = "Ident (x [Local])", color = "black"]
-node149 -> node153
-node153 [label = "LoadElem", color = "black"]
-node138 -> node154
-node154 [label = "Block", color = "black"]
-node154 -> node155
-node155 [label = "Assignment", color = "black"]
-node155 -> node156
-node156 [label = "Designator (Kind: Local)", color = "black"]
-node156 -> node157
-node157 [label = "Ident (x [Local])", color = "black"]
-node155 -> node158
-node158 [label = "BinExpr (/)", color = "black"]
-node158 -> node159
-node159 [label = "BinExpr (+)", color = "black"]
-node159 -> node160
-node160 [label = "Designator (Kind: Local)", color = "black"]
-node160 -> node161
-node161 [label = "Ident (l [Local])", color = "black"]
-node159 -> node162
-node162 [label = "Designator (Kind: Local)", color = "black"]
-node162 -> node163
-node163 [label = "Ident (r [Local])", color = "black"]
-node158 -> node164
-node164 [label = "IntCon (2)", color = "black"]
-node154 -> node165
-node165 [label = "ElseIf", color = "black"]
-node165 -> node166
-node166 [label = "If", color = "black"]
-node166 -> node167
-node167 [label = "BinExpr (<)", color = "black"]
-node167 -> node168
-node168 [label = "Designator (Kind: Local)", color = "black"]
-node168 -> node169
-node169 [label = "Ident (matrNr [Local])", color = "black"]
-node167 -> node170
-node170 [label = "LoadFld", color = "black"]
-node170 -> node171
-node171 [label = "Designator (Kind: Fld)", color = "black"]
-node171 -> node172
-node172 [label = "Ident (list [Static])", color = "black"]
-node171 -> node173
-node173 [label = "Designator (Kind: Local)", color = "black"]
-node173 -> node174
-node174 [label = "Ident (x [Local])", color = "black"]
-node171 -> node175
-node175 [label = "LoadElem", color = "black"]
-node166 -> node176
-node176 [label = "Assignment", color = "black"]
-node176 -> node177
-node177 [label = "Designator (Kind: Local)", color = "black"]
-node177 -> node178
-node178 [label = "Ident (r [Local])", color = "black"]
-node176 -> node179
-node179 [label = "BinExpr (-)", color = "black"]
-node179 -> node180
-node180 [label = "Designator (Kind: Local)", color = "black"]
-node180 -> node181
-node181 [label = "Ident (x [Local])", color = "black"]
-node179 -> node182
-node182 [label = "IntCon (1)", color = "black"]
-node165 -> node183
-node183 [label = "Assignment", color = "black"]
-node183 -> node184
-node184 [label = "Designator (Kind: Local)", color = "black"]
-node184 -> node185
-node185 [label = "Ident (l [Local])", color = "black"]
-node183 -> node186
-node186 [label = "BinExpr (+)", color = "black"]
-node186 -> node187
-node187 [label = "Designator (Kind: Local)", color = "black"]
-node187 -> node188
-node188 [label = "Ident (x [Local])", color = "black"]
-node186 -> node189
-node189 [label = "IntCon (1)", color = "black"]
-node126 -> node190
-node190 [label = "If", color = "black"]
-node190 -> node191
-node191 [label = "BinExpr (==)", color = "black"]
-node191 -> node192
-node192 [label = "Designator (Kind: Local)", color = "black"]
-node192 -> node193
-node193 [label = "Ident (matrNr [Local])", color = "black"]
-node191 -> node194
-node194 [label = "LoadFld", color = "black"]
-node194 -> node195
-node195 [label = "Designator (Kind: Fld)", color = "black"]
-node195 -> node196
-node196 [label = "Ident (list [Static])", color = "black"]
-node195 -> node197
-node197 [label = "Designator (Kind: Local)", color = "black"]
-node197 -> node198
-node198 [label = "Ident (x [Local])", color = "black"]
-node195 -> node199
-node199 [label = "LoadElem", color = "black"]
-node190 -> node200
-node200 [label = "Return", color = "black"]
-node200 -> node201
-node201 [label = "Designator (Kind: Local)", color = "black"]
-node201 -> node202
-node202 [label = "Ident (x [Local])", color = "black"]
-node126 -> node203
-node203 [label = "Return", color = "black"]
-node203 -> node204
-node204 [label = "UnaryExpr (-)", color = "black"]
-node204 -> node205
-node205 [label = "IntCon (1)", color = "black"]
-}
-node0 -> printStudent
-printStudent [label = "Method (printStudent)"]
-subgraph cluster_printStudent {
-printStudent -> node207
-node207 [label = "Var (i)"]
-printStudent -> node208
-node208 [label = "Block", color = "black"]
-node208 -> node209
-node209 [label = "CharPrint (width = 0)", color = "black"]
-node209 -> node210
-node210 [label = "CharCon ('m')", color = "black"]
-node208 -> node211
-node211 [label = "CharPrint (width = 0)", color = "black"]
-node211 -> node212
-node212 [label = "CharCon ('[')", color = "black"]
-node208 -> node213
-node213 [label = "IntPrint (width = 0)", color = "black"]
-node213 -> node214
-node214 [label = "Designator (Kind: Local)", color = "black"]
-node214 -> node215
-node215 [label = "Ident (i [Local])", color = "black"]
-node208 -> node216
-node216 [label = "CharPrint (width = 0)", color = "black"]
-node216 -> node217
-node217 [label = "CharCon (']')", color = "black"]
-node208 -> node218
-node218 [label = "CharPrint (width = 0)", color = "black"]
-node218 -> node219
-node219 [label = "CharCon ('=')", color = "black"]
-node208 -> node220
-node220 [label = "IntPrint (width = 0)", color = "black"]
-node220 -> node221
-node221 [label = "LoadFld", color = "black"]
-node221 -> node222
-node222 [label = "Designator (Kind: Fld)", color = "black"]
-node222 -> node223
-node223 [label = "Ident (list [Static])", color = "black"]
-node222 -> node224
-node224 [label = "Designator (Kind: Local)", color = "black"]
-node224 -> node225
-node225 [label = "Ident (i [Local])", color = "black"]
-node222 -> node226
-node226 [label = "LoadElem", color = "black"]
-node208 -> node227
-node227 [label = "CharPrint (width = 0)", color = "black"]
-node227 -> node228
-node228 [label = "CharCon (',')", color = "black"]
-node208 -> node229
-node229 [label = "Call printString", color = "black"]
-node229 -> node230
-node230 [label = "LoadFld", color = "black"]
-node230 -> node231
-node231 [label = "Designator (Kind: Fld)", color = "black"]
-node231 -> node232
-node232 [label = "Ident (list [Static])", color = "black"]
-node231 -> node233
-node233 [label = "Designator (Kind: Local)", color = "black"]
-node233 -> node234
-node234 [label = "Ident (i [Local])", color = "black"]
-node231 -> node235
-node235 [label = "LoadElem", color = "black"]
-node208 -> node236
-node236 [label = "CharPrint (width = 0)", color = "black"]
-node236 -> node237
-node237 [label = "CharCon ('\n')", color = "black"]
+node20 [label = "Ident (b [Local])", color = "black"]
 }
 node0 -> main
 main [label = "Method (main)"]
 subgraph cluster_main {
-main -> node239
-node239 [label = "Type (s [class])"]
-main -> node240
-node240 [label = "Block", color = "black"]
-node240 -> node241
-node241 [label = "Call init", color = "black"]
-node240 -> node242
-node242 [label = "Assignment", color = "black"]
-node242 -> node243
-node243 [label = "Designator (Kind: Local)", color = "black"]
-node243 -> node244
-node244 [label = "Ident (s [Local])", color = "black"]
-node242 -> node245
-node245 [label = "New", color = "black"]
-node245 -> node246
-node246 [label = "Type (Student [class])"]
-node246 -> node247
-node247 [label = "Var (matrNr)"]
-node246 -> node248
-node248 [label = "Var (name [arr])"]
-node240 -> node249
-node249 [label = "Assignment", color = "black"]
-node249 -> node250
-node250 [label = "Designator (Kind: Fld)", color = "black"]
-node250 -> node251
-node251 [label = "Ident (s [Local])", color = "black"]
-node249 -> node252
-node252 [label = "IntCon (1234567)", color = "black"]
-node240 -> node253
-node253 [label = "Assignment", color = "black"]
-node253 -> node254
-node254 [label = "Designator (Kind: Fld)", color = "black"]
-node254 -> node255
-node255 [label = "Ident (s [Local])", color = "black"]
-node253 -> node256
-node256 [label = "NewArray", color = "black"]
-node256 -> node257
-node257 [label = "Type (char)"]
-node256 -> node258
-node258 [label = "IntCon (3)", color = "black"]
-node240 -> node259
-node259 [label = "Assignment", color = "black"]
-node259 -> node260
-node260 [label = "Designator (Kind: Elem)", color = "black"]
-node260 -> node261
-node261 [label = "Ident (s [Local])", color = "black"]
-node260 -> node262
-node262 [label = "LoadFld", color = "black"]
-node260 -> node263
-node263 [label = "IntCon (0)", color = "black"]
-node259 -> node264
-node264 [label = "CharCon ('X')", color = "black"]
-node240 -> node265
-node265 [label = "Assignment", color = "black"]
-node265 -> node266
-node266 [label = "Designator (Kind: Elem)", color = "black"]
-node266 -> node267
-node267 [label = "Ident (s [Local])", color = "black"]
-node266 -> node268
-node268 [label = "LoadFld", color = "black"]
-node266 -> node269
-node269 [label = "IntCon (1)", color = "black"]
-node265 -> node270
-node270 [label = "CharCon ('\\')", color = "black"]
-node240 -> node271
-node271 [label = "Assignment", color = "black"]
-node271 -> node272
-node272 [label = "Designator (Kind: Elem)", color = "black"]
-node272 -> node273
-node273 [label = "Ident (s [Local])", color = "black"]
-node272 -> node274
-node274 [label = "LoadFld", color = "black"]
-node272 -> node275
-node275 [label = "IntCon (2)", color = "black"]
-node271 -> node276
-node276 [label = "CharCon ('Y')", color = "black"]
-node240 -> node277
-node277 [label = "Call add", color = "black"]
-node277 -> node278
-node278 [label = "Designator (Kind: Local)", color = "black"]
-node278 -> node279
-node279 [label = "Ident (s [Local])", color = "black"]
-node240 -> node280
-node280 [label = "Assignment", color = "black"]
-node280 -> node281
-node281 [label = "Designator (Kind: Local)", color = "black"]
-node281 -> node282
-node282 [label = "Ident (s [Local])", color = "black"]
-node280 -> node283
-node283 [label = "New", color = "black"]
-node283 -> node284
-node284 [label = "Type (Student [class])"]
-node284 -> node285
-node285 [label = "Var (matrNr)"]
-node284 -> node286
-node286 [label = "Var (name [arr])"]
-node240 -> node287
-node287 [label = "Assignment", color = "black"]
-node287 -> node288
-node288 [label = "Designator (Kind: Fld)", color = "black"]
-node288 -> node289
-node289 [label = "Ident (s [Local])", color = "black"]
-node287 -> node290
-node290 [label = "IntCon (9876543)", color = "black"]
-node240 -> node291
-node291 [label = "Assignment", color = "black"]
-node291 -> node292
-node292 [label = "Designator (Kind: Fld)", color = "black"]
-node292 -> node293
-node293 [label = "Ident (s [Local])", color = "black"]
-node291 -> node294
-node294 [label = "NewArray", color = "black"]
-node294 -> node295
-node295 [label = "Type (char)"]
-node294 -> node296
-node296 [label = "IntCon (4)", color = "black"]
-node240 -> node297
-node297 [label = "Assignment", color = "black"]
-node297 -> node298
-node298 [label = "Designator (Kind: Elem)", color = "black"]
-node298 -> node299
-node299 [label = "Ident (s [Local])", color = "black"]
-node298 -> node300
-node300 [label = "LoadFld", color = "black"]
-node298 -> node301
-node301 [label = "IntCon (0)", color = "black"]
-node297 -> node302
-node302 [label = "CharCon ('M')", color = "black"]
-node240 -> node303
-node303 [label = "Assignment", color = "black"]
-node303 -> node304
-node304 [label = "Designator (Kind: Elem)", color = "black"]
-node304 -> node305
-node305 [label = "Ident (s [Local])", color = "black"]
-node304 -> node306
-node306 [label = "LoadFld", color = "black"]
-node304 -> node307
-node307 [label = "IntCon (1)", color = "black"]
-node303 -> node308
-node308 [label = "CharCon ('r')", color = "black"]
-node240 -> node309
-node309 [label = "Assignment", color = "black"]
-node309 -> node310
-node310 [label = "Designator (Kind: Elem)", color = "black"]
-node310 -> node311
-node311 [label = "Ident (s [Local])", color = "black"]
-node310 -> node312
-node312 [label = "LoadFld", color = "black"]
-node310 -> node313
-node313 [label = "IntCon (2)", color = "black"]
-node309 -> node314
-node314 [label = "CharCon ('.')", color = "black"]
-node240 -> node315
-node315 [label = "Assignment", color = "black"]
-node315 -> node316
-node316 [label = "Designator (Kind: Elem)", color = "black"]
-node316 -> node317
-node317 [label = "Ident (s [Local])", color = "black"]
-node316 -> node318
-node318 [label = "LoadFld", color = "black"]
-node316 -> node319
-node319 [label = "IntCon (3)", color = "black"]
-node315 -> node320
-node320 [label = "CharCon ('X')", color = "black"]
-node240 -> node321
-node321 [label = "Call add", color = "black"]
-node321 -> node322
-node322 [label = "Designator (Kind: Local)", color = "black"]
-node322 -> node323
-node323 [label = "Ident (s [Local])", color = "black"]
-node240 -> node324
-node324 [label = "Assignment", color = "black"]
-node324 -> node325
-node325 [label = "Designator (Kind: Local)", color = "black"]
-node325 -> node326
-node326 [label = "Ident (s [Local])", color = "black"]
-node324 -> node327
-node327 [label = "New", color = "black"]
-node327 -> node328
-node328 [label = "Type (Student [class])"]
-node328 -> node329
-node329 [label = "Var (matrNr)"]
-node328 -> node330
-node330 [label = "Var (name [arr])"]
-node240 -> node331
-node331 [label = "Assignment", color = "black"]
-node331 -> node332
-node332 [label = "Designator (Kind: Fld)", color = "black"]
-node332 -> node333
-node333 [label = "Ident (s [Local])", color = "black"]
-node331 -> node334
-node334 [label = "IntCon (9090900)", color = "black"]
-node240 -> node335
-node335 [label = "Assignment", color = "black"]
-node335 -> node336
-node336 [label = "Designator (Kind: Fld)", color = "black"]
-node336 -> node337
-node337 [label = "Ident (s [Local])", color = "black"]
-node335 -> node338
-node338 [label = "NewArray", color = "black"]
-node338 -> node339
-node339 [label = "Type (char)"]
-node338 -> node340
-node340 [label = "IntCon (2)", color = "black"]
-node240 -> node341
-node341 [label = "Assignment", color = "black"]
-node341 -> node342
-node342 [label = "Designator (Kind: Elem)", color = "black"]
-node342 -> node343
-node343 [label = "Ident (s [Local])", color = "black"]
-node342 -> node344
-node344 [label = "LoadFld", color = "black"]
-node342 -> node345
-node345 [label = "IntCon (0)", color = "black"]
-node341 -> node346
-node346 [label = "CharCon ('A')", color = "black"]
-node240 -> node347
-node347 [label = "Assignment", color = "black"]
-node347 -> node348
-node348 [label = "Designator (Kind: Elem)", color = "black"]
-node348 -> node349
-node349 [label = "Ident (s [Local])", color = "black"]
-node348 -> node350
-node350 [label = "LoadFld", color = "black"]
-node348 -> node351
-node351 [label = "IntCon (1)", color = "black"]
-node347 -> node352
-node352 [label = "CharCon ('l')", color = "black"]
-node240 -> node353
-node353 [label = "Call add", color = "black"]
-node353 -> node354
-node354 [label = "Designator (Kind: Local)", color = "black"]
-node354 -> node355
-node355 [label = "Ident (s [Local])", color = "black"]
-node240 -> node356
-node356 [label = "Call printStudent", color = "black"]
-node356 -> node357
-node357 [label = "IntCon (0)", color = "black"]
-node240 -> node358
-node358 [label = "Call printStudent", color = "black"]
-node358 -> node359
-node359 [label = "IntCon (1)", color = "black"]
-node240 -> node360
-node360 [label = "Call printStudent", color = "black"]
-node360 -> node361
-node361 [label = "IntCon (2)", color = "black"]
-node240 -> node362
-node362 [label = "IntPrint (width = 0)", color = "black"]
-node362 -> node363
-node363 [label = "IntCon (9876543)", color = "black"]
-node240 -> node364
-node364 [label = "CharPrint (width = 0)", color = "black"]
-node364 -> node365
-node365 [label = "CharCon (' ')", color = "black"]
-node240 -> node366
-node366 [label = "Call printString", color = "black"]
-node366 -> node367
-node367 [label = "LoadFld", color = "black"]
-node367 -> node368
-node368 [label = "Designator (Kind: Fld)", color = "black"]
-node368 -> node369
-node369 [label = "Ident (list [Static])", color = "black"]
-node368 -> node370
-node370 [label = "Call find", color = "black"]
-node370 -> node371
-node371 [label = "IntCon (9876543)", color = "black"]
-node368 -> node372
-node372 [label = "LoadElem", color = "black"]
-node240 -> node373
-node373 [label = "CharPrint (width = 0)", color = "black"]
-node373 -> node374
-node374 [label = "CharCon ('\n')", color = "black"]
-node240 -> node375
-node375 [label = "IntPrint (width = 0)", color = "black"]
-node375 -> node376
-node376 [label = "IntCon (1234567)", color = "black"]
-node240 -> node377
-node377 [label = "CharPrint (width = 0)", color = "black"]
-node377 -> node378
-node378 [label = "CharCon (' ')", color = "black"]
-node240 -> node379
-node379 [label = "Call printString", color = "black"]
-node379 -> node380
-node380 [label = "LoadFld", color = "black"]
-node380 -> node381
-node381 [label = "Designator (Kind: Fld)", color = "black"]
-node381 -> node382
-node382 [label = "Ident (list [Static])", color = "black"]
-node381 -> node383
-node383 [label = "Call find", color = "black"]
-node383 -> node384
-node384 [label = "IntCon (1234567)", color = "black"]
-node381 -> node385
-node385 [label = "LoadElem", color = "black"]
-node240 -> node386
-node386 [label = "CharPrint (width = 0)", color = "black"]
-node386 -> node387
-node387 [label = "CharCon ('\n')", color = "black"]
-node240 -> node388
-node388 [label = "IntPrint (width = 0)", color = "black"]
-node388 -> node389
-node389 [label = "IntCon (9090900)", color = "black"]
-node240 -> node390
-node390 [label = "CharPrint (width = 0)", color = "black"]
-node390 -> node391
-node391 [label = "CharCon (' ')", color = "black"]
-node240 -> node392
-node392 [label = "Call printString", color = "black"]
-node392 -> node393
-node393 [label = "LoadFld", color = "black"]
-node393 -> node394
-node394 [label = "Designator (Kind: Fld)", color = "black"]
-node394 -> node395
-node395 [label = "Ident (list [Static])", color = "black"]
-node394 -> node396
-node396 [label = "Call find", color = "black"]
-node396 -> node397
-node397 [label = "IntCon (9090900)", color = "black"]
-node394 -> node398
-node398 [label = "LoadElem", color = "black"]
-node240 -> node399
-node399 [label = "CharPrint (width = 0)", color = "black"]
-node399 -> node400
-node400 [label = "CharCon ('\n')", color = "black"]
+main -> node22
+node22 [label = "Var (val)"]
+main -> node23
+node23 [label = "Var (result)"]
+main -> node24
+node24 [label = "Block", color = "black"]
+node24 -> node25
+node25 [label = "Assignment", color = "black"]
+node25 -> node26
+node26 [label = "Designator (Kind: Static)", color = "black"]
+node26 -> node27
+node27 [label = "Ident (ref [Static])", color = "black"]
+node25 -> node28
+node28 [label = "IntCon (5)", color = "black"]
+node24 -> node29
+node29 [label = "IntRead", color = "black"]
+node29 -> node30
+node30 [label = "Designator (Kind: Local)", color = "black"]
+node30 -> node31
+node31 [label = "Ident (val [Local])", color = "black"]
+node24 -> node32
+node32 [label = "Assignment", color = "black"]
+node32 -> node33
+node33 [label = "Designator (Kind: Local)", color = "black"]
+node33 -> node34
+node34 [label = "Ident (result [Local])", color = "black"]
+node32 -> node35
+node35 [label = "Call max", color = "black"]
+node35 -> node36
+node36 [label = "Designator (Kind: Static)", color = "black"]
+node36 -> node37
+node37 [label = "Ident (ref [Static])", color = "black"]
+node35 -> node38
+node38 [label = "Designator (Kind: Local)", color = "black"]
+node38 -> node39
+node39 [label = "Ident (val [Local])", color = "black"]
+node24 -> node40
+node40 [label = "IntPrint (width = 0)", color = "black"]
+node40 -> node41
+node41 [label = "Designator (Kind: Local)", color = "black"]
+node41 -> node42
+node42 [label = "Ident (result [Local])", color = "black"]
 }
 }
