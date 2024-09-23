@@ -99,11 +99,8 @@ public class BinExpr extends Expr {
             case GEQ:
                 interpreter.push((lval >= rval)? 1:0);
                 break;
-            case AND:
-                interpreter.push((blval && brval)? 1:0);
-                break;
-            case OR:
-                interpreter.push((blval || brval)? 1:0);
+            case AND, OR:
+                interpreter.push(brval? 1:0);
                 break;
             default:
                 throw new IllegalStateException("Operator not implemented");
