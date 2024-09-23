@@ -17,11 +17,11 @@ public class If extends Stat {
         this.stat = stat;
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
-        count = cond.buildDOTString(sb, name, count + 1);
-        count = stat.buildDOTString(sb, name, count + 1);
+        count = cond.toDOTString(sb, name, count + 1);
+        count = stat.toDOTString(sb, name, count + 1);
         return count;
     }
     @Override

@@ -18,11 +18,11 @@ public class LoadElem extends Expr {
         this(line,null);
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
         if (expr != null) {
-            count = expr.buildDOTString(sb, name, count + 1);
+            count = expr.toDOTString(sb, name, count + 1);
         }
         return count;
     }

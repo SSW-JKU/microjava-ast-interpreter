@@ -16,10 +16,10 @@ public class New extends Expr {
         this.obj = obj;
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
-        count = obj.buildDOTString(sb, name, count + 1);
+        count = obj.toDOTString(sb, name, count + 1);
         return count;
     }
     @Override

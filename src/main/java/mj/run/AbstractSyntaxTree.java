@@ -52,7 +52,7 @@ public class AbstractSyntaxTree {
 
         StringBuilder sb = new StringBuilder();
         sb.append("digraph G {\n");
-        root.buildDOTString(sb, "", 0);
+        root.toDOTString(sb, "", 0);
         sb.append("}");
 
         try (FileWriter writer = new FileWriter(TREE_FILENAME)) {

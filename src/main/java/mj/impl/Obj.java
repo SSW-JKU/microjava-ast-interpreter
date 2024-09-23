@@ -81,7 +81,7 @@ public class Obj extends Node {
     this(0, kind, name, type);
   }
   @Override
-  public int buildDOTString(StringBuilder sb, String parentName, int count) {
+  public int toDOTString(StringBuilder sb, String parentName, int count) {
     String name = "node%d".formatted(count);
 
     switch (kind) {
@@ -89,7 +89,7 @@ public class Obj extends Node {
         //introduce node
         sb.append("%s [label = \"%s\"]\n".formatted(name, getName()));
         for (Obj obj : locals.values()) {
-            count = obj.buildDOTString(sb, name, count + 1);
+            count = obj.toDOTString(sb, name, count + 1);
         }
         break;
       case Meth:
@@ -102,9 +102,9 @@ public class Obj extends Node {
         sb.append("%s [label = \"%s\"]\n".formatted(name, getName()));
         sb.append("subgraph cluster_%s {\n".formatted(name));
         for (Obj obj : locals.values()) {
-          count = obj.buildDOTString(sb, name, count + 1);
+          count = obj.toDOTString(sb, name, count + 1);
         }
-        count = block.buildDOTString(sb, name, count + 1);
+        count = block.toDOTString(sb, name, count + 1);
         sb.append("}\n");
         break;
       case Var:
@@ -121,7 +121,7 @@ public class Obj extends Node {
         sb.append("%s [label = \"%s\"]\n".formatted(name, getName()));
         if (type.kind == Struct.Kind.Class) {
           for (Obj obj : type.fields.values()) {
-            count = obj.buildDOTString(sb, name, count + 1);
+            count = obj.toDOTString(sb, name, count + 1);
           }
         }
         break;

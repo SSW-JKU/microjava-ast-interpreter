@@ -14,7 +14,7 @@ public abstract class Node {
         this.line = line;
         isBreakpoint = false;
     }
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
         String name = "node%d".formatted(count);
         //link to parent
         sb.append("%s -> %s\n".formatted(parentName, name));

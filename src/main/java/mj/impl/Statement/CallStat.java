@@ -24,8 +24,8 @@ public class CallStat extends Stat {
         this.methodToCall = new Call(line, methodToCall);
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        return methodToCall.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        return methodToCall.toDOTString(sb, parentName, count);
     }
     @Override
     public String getName() {

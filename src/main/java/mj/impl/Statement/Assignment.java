@@ -18,11 +18,11 @@ public class Assignment extends Stat {
         this.expr = expr;
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
-        count = var.buildDOTString(sb, name, count + 1);
-        count = expr.buildDOTString(sb, name, count + 1);
+        count = var.toDOTString(sb, name, count + 1);
+        count = expr.toDOTString(sb, name, count + 1);
         return count;
     }
     @Override

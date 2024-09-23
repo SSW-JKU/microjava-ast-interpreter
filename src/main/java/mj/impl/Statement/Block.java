@@ -17,11 +17,11 @@ public class Block extends Stat {
         statList = new ArrayList<>();
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
         for (Stat stat : statList) {
-            count = stat.buildDOTString(sb, name, count + 1);
+            count = stat.toDOTString(sb, name, count + 1);
         }
         return count;
     }

@@ -20,11 +20,11 @@ public class BinExpr extends Expr {
         this.right = right;
     }
     @Override
-    public int buildDOTString(StringBuilder sb, String parentName, int count) {
-        super.buildDOTString(sb, parentName, count);
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
         String name = "node%d".formatted(count);
-        count = left.buildDOTString(sb, name, count + 1);
-        count = right.buildDOTString(sb, name, count + 1);
+        count = left.toDOTString(sb, name, count + 1);
+        count = right.toDOTString(sb, name, count + 1);
         return count;
     }
     @Override
