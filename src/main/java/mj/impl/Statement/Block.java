@@ -37,10 +37,10 @@ public class Block extends Stat {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
         for (Node node : statList) {
-            item.getChildren().add(node.buildTreeView());
+            item.getChildren().add(node.toTreeView());
         }
         return  item;
     }

@@ -81,10 +81,10 @@ public class Call extends Expr {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
         for (Expr para : paras) {
-            item.getChildren().add(para.buildTreeView());
+            item.getChildren().add(para.toTreeView());
         }
         return item;
     }

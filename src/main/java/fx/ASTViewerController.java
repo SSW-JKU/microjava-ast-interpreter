@@ -181,7 +181,7 @@ public class ASTViewerController {
         ast = new AbstractSyntaxTree(selectedFile.getAbsolutePath());
 
         if (ast.isCompiled()) {
-            TreeItem<Node> item = ast.getRoot().buildTreeView();
+            TreeItem<Node> item = ast.getRoot().toTreeView();
             treeView.setRoot(item);
             runButton.setDisable(false);
             debugButton.setDisable(false);

@@ -35,9 +35,9 @@ public class UnaryExpr extends Expr {
         interpreter.push(-interpreter.pop());
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(expr.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(expr.toTreeView());
         return item;
     }
 }

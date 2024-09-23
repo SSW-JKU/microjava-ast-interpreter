@@ -110,10 +110,10 @@ public class BinExpr extends Expr {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(left.buildTreeView());
-        item.getChildren().add(right.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(left.toTreeView());
+        item.getChildren().add(right.toTreeView());
         return item;
     }
 }

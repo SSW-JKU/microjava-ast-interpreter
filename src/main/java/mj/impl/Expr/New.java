@@ -33,9 +33,9 @@ public class New extends Expr {
         interpreter.push(adr);
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(obj.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(obj.toTreeView());
         return item;
     }
 }

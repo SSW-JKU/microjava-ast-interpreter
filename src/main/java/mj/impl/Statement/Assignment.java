@@ -37,10 +37,10 @@ public class Assignment extends Stat {
         interpreter.assign(var, val);
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(var.buildTreeView());
-        item.getChildren().add(expr.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(var.toTreeView());
+        item.getChildren().add(expr.toTreeView());
         return item;
     }
 }

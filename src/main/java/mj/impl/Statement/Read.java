@@ -13,9 +13,9 @@ public abstract class Read extends Stat {
         this.var = var;
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(var.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(var.toTreeView());
         return item;
     }
 }

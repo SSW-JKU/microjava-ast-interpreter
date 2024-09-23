@@ -39,7 +39,7 @@ public class CallStat extends Stat {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        return methodToCall.buildTreeView();
+    public TreeItem<Node> toTreeView() {
+        return methodToCall.toTreeView();
     }
 }

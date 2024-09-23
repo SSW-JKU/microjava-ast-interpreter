@@ -42,10 +42,10 @@ public class LoadElem extends Expr {
         interpreter.push(interpreter.getHeap(adr + idx));
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
         if (expr != null) {
-            item.getChildren().add(expr.buildTreeView());
+            item.getChildren().add(expr.toTreeView());
         }
         return item;
     }

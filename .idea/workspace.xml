@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
-    </list>
+    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +24,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SET_USER_NAME_GLOBALLY" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">

@@ -40,10 +40,10 @@ public class ElseIf extends Stat {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(if_.buildTreeView());
-        item.getChildren().add(else_.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(if_.toTreeView());
+        item.getChildren().add(else_.toTreeView());
         return item;
     }
 }

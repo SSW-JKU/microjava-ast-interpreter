@@ -41,10 +41,10 @@ public class NewArray extends Expr {
         interpreter.push(adr + 1);
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(obj.buildTreeView());
-        item.getChildren().add(expr.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(obj.toTreeView());
+        item.getChildren().add(expr.toTreeView());
         return item;
     }
 }

@@ -42,11 +42,11 @@ public class Designator extends Expr {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(ident.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(ident.toTreeView());
         for (Expr expr : exprList) {
-            item.getChildren().add(expr.buildTreeView());
+            item.getChildren().add(expr.toTreeView());
         }
         return item;
     }

@@ -40,7 +40,7 @@ public abstract class Node {
             }
         }
     }
-    public TreeItem<Node> buildTreeView() {
+    public TreeItem<Node> toTreeView() {
         TreeItem<Node> item = new TreeItem<>(this);
         item.setExpanded(true);
         return item;

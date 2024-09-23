@@ -182,24 +182,24 @@ public class Obj extends Node {
     }
   }
   @Override
-  public TreeItem<Node> buildTreeView() {
-     TreeItem<Node> item = super.buildTreeView();
+  public TreeItem<Node> toTreeView() {
+     TreeItem<Node> item = super.toTreeView();
      switch (kind) {
       case Prog:
         for (Obj obj : locals.values()) {
-          item.getChildren().add(obj.buildTreeView());
+          item.getChildren().add(obj.toTreeView());
         }
         break;
       case Meth:
         for (Obj obj : locals.values()) {
-          item.getChildren().add(obj.buildTreeView());
+          item.getChildren().add(obj.toTreeView());
         }
-        item.getChildren().add(block.buildTreeView());
+        item.getChildren().add(block.toTreeView());
         break;
        case Type:
          if (type.kind == Struct.Kind.Class) {
            for (Obj obj : type.fields.values()) {
-            item.getChildren().add(obj.buildTreeView());
+            item.getChildren().add(obj.toTreeView());
            }
          }
       default:

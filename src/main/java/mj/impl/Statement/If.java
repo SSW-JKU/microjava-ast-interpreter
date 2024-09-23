@@ -38,10 +38,10 @@ public class If extends Stat {
         }
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
-        item.getChildren().add(cond.buildTreeView());
-        item.getChildren().add(stat.buildTreeView());
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(cond.toTreeView());
+        item.getChildren().add(stat.toTreeView());
         return item;
     }
     public void executeCond(Interpreter interpreter) throws ControlFlowException {

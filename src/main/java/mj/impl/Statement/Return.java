@@ -40,10 +40,10 @@ public class Return extends Stat {
         throw new ReturnException();
     }
     @Override
-    public TreeItem<Node> buildTreeView() {
-        TreeItem<Node> item = super.buildTreeView();
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
         if (expr != null) {
-            item.getChildren().add(expr.buildTreeView());
+            item.getChildren().add(expr.toTreeView());
         }
         return item;
     }
