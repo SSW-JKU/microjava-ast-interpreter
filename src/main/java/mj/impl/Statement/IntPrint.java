@@ -12,13 +12,6 @@ public class IntPrint extends Print {
         super(line, expr);
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
-    }
-    @Override
     public String getName() {
         return "IntPrint (width = %d)".formatted(width);
     }

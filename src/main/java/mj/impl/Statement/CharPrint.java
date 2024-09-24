@@ -8,17 +8,8 @@ public class CharPrint extends Print {
     public CharPrint(int line, Expr expr, int width) {
         super(line, expr, width);
     }
-
     public CharPrint(int line, Expr expr) {
         super(line, expr);
-    }
-
-    @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
     }
     @Override
     public String getName() {
