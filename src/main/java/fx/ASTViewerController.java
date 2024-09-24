@@ -39,6 +39,7 @@ public class ASTViewerController {
     double oldZoom;
     String oldScroll;
     AbstractSyntaxTree ast;
+    Thread watcherThread;
     @FXML
     public WebView webView;
     @FXML
@@ -64,24 +65,20 @@ public class ASTViewerController {
     @FXML
     public void setStage(Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest((_) -> watcherThread.interrupt());
     }
     @FXML
     public void initialize() {
         setSymTabCellFactory(globalSymTab);
         setSymTabCellFactory(localSymTab);
 
-        Thread watcherThread = new Thread(() -> {
+        watcherThread = new Thread(() -> {
             try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
                 Path svgFile = Paths.get(".");
                 svgFile.register(watchService, ENTRY_CREATE, ENTRY_MODIFY);
                 WatchKey key;
                 while (true) {
-                    try {
-                        key = watchService.take();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
+                    key = watchService.take();
                     for (WatchEvent<?> evt : key.pollEvents()) {
                         WatchEvent<Path> pathEvent = (WatchEvent<Path>) evt;
                         Path fileName = pathEvent.context();
@@ -91,8 +88,8 @@ public class ASTViewerController {
                     }
                     key.reset();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (IOException | InterruptedException e) {
+               //return
             }
         });
         watcherThread.start();
