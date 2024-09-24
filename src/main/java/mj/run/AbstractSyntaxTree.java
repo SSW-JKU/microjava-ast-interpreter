@@ -46,6 +46,8 @@ public class AbstractSyntaxTree {
                 interpreter.printMethodStack();
                 interpreter.printExpressionStack();
             }
+            writeASTToFile(interpreter.getRoot());
+            interpreter.setLineOfExecution(0);
         }
     }
     public static void writeASTToFile(Node root) {

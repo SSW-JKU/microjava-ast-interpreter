@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mj.impl.Exceptions.ControlFlowException;
+import mj.impl.Expr.Ident;
 import mj.impl.Node;
 import mj.impl.Obj;
 import mj.run.AbstractSyntaxTree;
@@ -31,7 +32,6 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 public class ASTViewerController {
-
     private boolean ctrlPressed = false;
     private final Object lock = new Object();
     Stage stage;
@@ -69,6 +69,10 @@ public class ASTViewerController {
     }
     @FXML
     public void initialize() {
+
+        openFile();
+        compile();
+
         setSymTabCellFactory(globalSymTab);
         setSymTabCellFactory(localSymTab);
 
@@ -171,6 +175,8 @@ public class ASTViewerController {
         runButton.setDisable(true);
         debugButton.setDisable(true);
         stepButton.setDisable(false);
+        treeView.refresh();
+        listView.refresh();
         run();
     }
     @FXML
@@ -193,9 +199,9 @@ public class ASTViewerController {
         globalSymTab.getItems().clear();
 
         Interpreter interpreter = ast.getInterpreter();
-        Obj program = (Obj)interpreter.getRoot();
+        Ident program = (Ident)interpreter.getRoot();
 
-        for (Obj obj : program.locals.values()) {
+        for (Obj obj : program.getObj().locals.values()) {
             if (obj.kind == Obj.Kind.Var) {
                 int value = interpreter.getData(obj.adr);
                 globalSymTab.getItems().add(new TabItem(obj, value));
@@ -208,15 +214,16 @@ public class ASTViewerController {
         localSymTab.getItems().clear();
 
         Interpreter interpreter = ast.getInterpreter();
-        Obj curMethod = interpreter.getCurMethod();
+        Ident curMethod = (Ident)interpreter.getCurMethod();
 
         if (curMethod != null) {
-            locVarLabel.setText("Local Variables (%s)".formatted(curMethod.name));
-            for (Obj obj : curMethod.locals.values()) {
+            locVarLabel.setText("Local Variables (%s)".formatted(curMethod.getObj().name));
+            for (Obj obj : curMethod.getObj().locals.values()) {
                 int value = interpreter.getLocal(obj.adr);
                 localSymTab.getItems().add(new TabItem(obj, value));
             }
-        } else {
+        }
+        else {
             locVarLabel.setText("Local Variables");
         }
         localSymTab.refresh();
@@ -243,6 +250,7 @@ public class ASTViewerController {
                 runButton.setDisable(false);
                 debugButton.setDisable(false);
                 stepButton.setDisable(true);
+
             } catch (ControlFlowException e) {
                 throw new RuntimeException(e);
             }

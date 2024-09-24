@@ -6,10 +6,8 @@ import mj.run.AbstractSyntaxTree;
 import mj.run.Interpreter;
 
 public abstract class Node {
-
     int line;
     boolean isBreakpoint;
-
     public Node(int line) {
         this.line = line;
         isBreakpoint = false;
@@ -17,7 +15,9 @@ public abstract class Node {
     public int toDOTString(StringBuilder sb, String parentName, int count) {
         String name = "node%d".formatted(count);
         //link to parent
-        sb.append("%s -> %s\n".formatted(parentName, name));
+        if (!parentName.equals("")) {
+            sb.append("%s -> %s\n".formatted(parentName, name));
+        }
         //introduce node
         sb.append("%s [label = \"%s\", color = \"%s\"]\n".formatted(name, getName(), isBreakpoint? "red":"black"));
         return count;
@@ -58,4 +58,5 @@ public abstract class Node {
     public boolean isCurrentBreakpoint() {
         return isBreakpoint;
     }
+
 }

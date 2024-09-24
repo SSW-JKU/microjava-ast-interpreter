@@ -13,6 +13,9 @@ import mj.impl.Tab;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 COMPILER ASTMircoJava
 
@@ -31,10 +34,11 @@ COMPILER ASTMircoJava
    */
   private static final int MAX_LOCALS = 127;
 
-
   public final Tab tab = new Tab(this);
 
   private Obj curMethod = Tab.noObj;
+
+  private final Map<Obj, Ident> methods = new HashMap<>();
 
   private char parseChar(String val) {
 
@@ -143,7 +147,13 @@ PRODUCTIONS
 ASTMircoJava<out Node program>
 = "program"
 ident                   (.Obj prog = tab.insert(Obj.Kind.Prog, t.val, Tab.noType);
-                          prog.setLine(t.line);
+                          program = new Ident(t.line, prog);
+                          Obj chr = tab.find("chr");
+                          methods.put(chr, new Ident(0, chr));
+                          Obj ord = tab.find("ord");
+                          methods.put(ord, new Ident(0, ord));
+                          Obj len = tab.find("len");
+                          methods.put(len, new Ident(0, len));
                           tab.openScope();.)
 {
     ConstDecl
@@ -158,17 +168,16 @@ ident                   (.Obj prog = tab.insert(Obj.Kind.Prog, t.val, Tab.noType
 }
 "}"                     (.Obj main = tab.curScope.findGlobal("main");
                           if (main == null || main.kind != Obj.Kind.Meth) { SemErr("method main not found"); }
-                          prog.setMain(new CallStat(t.line, main));
+                          ((Ident)program).setMain(new CallStat(0, methods.get(main)));
+                          ((Ident)program).setMethods(methods.values().stream().collect(Collectors.toList()));
                           prog.locals = tab.curScope.locals();
-                          tab.closeScope();
-                          program = prog;.)
+                          tab.closeScope();.)
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ConstDecl               (.Struct type;.)
 = "final"
 Type<out type>
-ident                   (.Obj con = tab.insert(Obj.Kind.Con, t.val, type);
-                          con.setLine(t.line);.)
+ident                   (.Obj con = tab.insert(Obj.Kind.Con, t.val, type);.)
  "="
 (                       (.if (!type.equals(Tab.intType)) { SemErr("value does not match constant type"); }.)
     number              (.con.val = Integer.parseInt(t.val);.)
@@ -179,23 +188,19 @@ ident                   (.Obj con = tab.insert(Obj.Kind.Con, t.val, type);
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 VarDecl
-=                       (.Struct type;
-                          Obj var;.)
+=                       (.Struct type;.)
 Type<out type>
-ident                   (.var = tab.insert(Obj.Kind.Var, t.val, type);
-                          var.setLine(t.line);.)
+ident                   (.tab.insert(Obj.Kind.Var, t.val, type);.)
 {
     ","
-    ident               (.var = tab.insert(Obj.Kind.Var, t.val, type);
-                          var.setLine(t.line);.)
+    ident               (.tab.insert(Obj.Kind.Var, t.val, type);.)
 }
 ";"
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ClassDecl
 = "class"
-ident                   (.Obj clazz = tab.insert(Obj.Kind.Type, t.val, new Struct(Struct.Kind.Class));
-                          clazz.setLine(t.line);.)
+ident                   (.Obj clazz = tab.insert(Obj.Kind.Type, t.val, new Struct(Struct.Kind.Class));.)
 "{"                     (.tab.openScope();.)
 {
     VarDecl             (.if (tab.curScope.nVars() > MAX_FIELDS) { SemErr("too many fields"); }.)
@@ -213,7 +218,8 @@ MethodDecl              (.Stat block;.)
 )
 ident                   (.String methodName = t.val;
                           curMethod = tab.insert(Obj.Kind.Meth, methodName, type);
-                          curMethod.setLine(t.line);
+                          Ident method = new Ident(t.line, curMethod);
+		                  methods.put(curMethod, method);
                           tab.openScope();.)
 "("
 [
@@ -226,8 +232,9 @@ ident                   (.String methodName = t.val;
                           }.)
 {
     VarDecl
-}                       (.curMethod.locals = tab.curScope.locals();.)
-Block<out block, false> (.curMethod.block = (Block)block;
+}                       (.if (tab.curScope.nVars() > MAX_LOCALS) { SemErr("too many local variables"); }
+                          curMethod.locals = tab.curScope.locals();.)
+Block<out block, false> (.method.setBlock((Block)block);
                           tab.closeScope();.)
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,13 +242,11 @@ FormPars
 =                       (.Struct type;
                           Obj param;.)
 Type<out type>
-ident                   (.param = tab.insert(Obj.Kind.Var, t.val, type);
-                          param.setLine(t.line);.)
+ident                   (.param = tab.insert(Obj.Kind.Var, t.val, type);.)
 {
     ","
     Type<out type>
-    ident               (.param = tab.insert(Obj.Kind.Var, t.val, type);
-                          param.setLine(t.line);.)
+    ident               (.param = tab.insert(Obj.Kind.Var, t.val, type);.)
 }
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,12 +291,12 @@ Statement<out Stat node, boolean inLoop>
 = Designator<out var>   (.lineOfCall = t.line;.)
 (
     Assignop<out op>    (.lineOfOp = t.line;.)
-    Expr<out expr>      (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.getObj().name); }
+    Expr<out expr>      (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.getIdent().getObj().name); }
                           if (op == Operator.ASSIGN) {
                             if (!expr.type.assignableTo(var.type)) { SemErr("incompatible types"); }
                           }
                           else {
-                            if (var.type != Tab.intType || var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+                            if (var.type != Tab.intType || expr.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
                           }
                           switch (op) {
                             case ASSIGN:
@@ -315,7 +320,7 @@ Statement<out Stat node, boolean inLoop>
                           }.)
     |
     ActPars<out param, var>
-                        (.node = new CallStat(lineOfCall, var, param);.)
+                        (.node = new CallStat(lineOfCall, methods.get(var.getIdent().getObj()), param);.)
     |
     "++"                (.if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
                           if (var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
@@ -398,15 +403,15 @@ Assignop<out Operator op>
 .
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ActPars<.out List<Expr> param, Designator designator.>
-                        (.param = new ArrayList<Expr>();
+                        (.param = new ArrayList<>();
                           Expr expr;
                           Obj meth;.)
 = "("                   (.if (designator.kind != Expr.Kind.Meth) { SemErr("called object is not a method"); }
-                          meth = designator.getObj();
+                          meth = designator.getIdent().getObj();
                           int aPars = 0;
                           int fPars = meth.nPars;
                           Iterator<Obj> pars = meth.locals.values().iterator();
-		                  Obj fp = Tab.noObj;.)
+		                  Obj fp;.)
 [
     Expr<out expr>      (.param.add(loadExpr(expr));
                           aPars++;
@@ -518,7 +523,7 @@ Factor<out Expr expr>   (.expr = new IntCon(t.line, 0);
 = Designator<out expr>  (.lineOfCall = t.line;.)
 [                       (.if (expr.type == Tab.noType) { SemErr("invalid call of void method"); }.)
     ActPars<out param, (Designator)expr>
-                        (.expr = new Call(lineOfCall, (Designator) expr, param);.)
+                        (.expr = new Call(lineOfCall, methods.get(((Designator)expr).getIdent().getObj()), param);.)
 ]
 |
 number                  (.expr = new IntCon(t.line, t.val);.)
@@ -527,16 +532,17 @@ charConst               (.expr = new CharCon(t.line, t.val, parseChar(t.val));.)
 |
 "new"                   (.lineOfNew = t.line;.)
 ident                   (.Obj obj = tab.find(t.val);
+                          Ident ident = new Ident(t.line, obj);
                           Struct type = obj.type;
                           if (obj.kind != Obj.Kind.Type) { SemErr("type expected"); }.)
 [
     "["
     Expr<out expr>      (.if (expr.type != Tab.intType) { SemErr("array size must be an integer"); }
-                          expr = new NewArray(lineOfNew, obj, expr);.)
+                          expr = new NewArray(lineOfNew, ident, expr);.)
     "]"
 ]                       (.else {
                             if (type.kind != Struct.Kind.Class) { SemErr("class type expected"); }
-                            expr = new New(lineOfNew, obj);
+                            expr = new New(lineOfNew, ident);
                           }.)
 |
 "("

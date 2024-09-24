@@ -3,7 +3,6 @@ package mj.impl.Expr;
 import javafx.scene.control.TreeItem;
 import mj.impl.Exceptions.ControlFlowException;
 import mj.impl.Node;
-import mj.impl.Obj;
 import mj.run.Interpreter;
 
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Designator extends Expr {
-    Ident ident;
-    List<Expr> exprList;
+    private final Ident ident;
+    private final List<Expr> exprList;
 
     public Designator(int line, Ident ident) {
         super(line, ident.type, ident.offset, ident.kind);
@@ -57,7 +56,7 @@ public class Designator extends Expr {
     public boolean canBeAssignedTo() {
         return EnumSet.of(Kind.Local, Kind.Static, Kind.Fld, Kind.Elem).contains(kind);
     }
-    public Obj getObj() {
-        return ident.getVar();
+    public Ident getIdent() {
+        return ident;
     }
 }

@@ -4,10 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
+    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="Removed Obj class from Node inheritance hierarchy and update all effected code parts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Obj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/ASTMicroJava.atg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/ASTMicroJava.atg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java.old" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/trace.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/trace.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
     </list>
@@ -52,22 +65,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.ASTViewerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Paul/Documents/JKU/2024_SS/BachelorThesis/ASTMicroJavaFX&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.ASTViewerApplication.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Paul/Documents/JKU/2024_SS/BachelorThesis/ASTMicroJavaFX",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editor.preferences.completion"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Paul\Documents\JKU\2024_SS\BachelorThesis\ASTMicroJavaFX\src\main\resources\fx" />
@@ -132,15 +145,45 @@
       <option name="project" value="LOCAL" />
       <updated>1727180017459</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Set setOnCloseRequest event on stage to interrupt watcher thread on closing">
+      <option name="closed" value="true" />
+      <created>1727181099309</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727181099309</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Set stage in controller instance">
+      <option name="closed" value="true" />
+      <created>1727181139490</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727181139490</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="AST interpreter" />
     <MESSAGE value="Generalize toDOTString method to super class Read" />
     <MESSAGE value="Generalize toDOTString method to super class Print" />
-    <option name="LAST_COMMIT_MESSAGE" value="Generalize toDOTString method to super class Print" />
+    <MESSAGE value="Set setOnCloseRequest event on stage to interrupt watcher thread on closing" />
+    <MESSAGE value="Set stage in controller instance" />
+    <MESSAGE value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -157,11 +200,6 @@
             <option name="lambda-ordinal" value="-1" />
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/22-ea+11/javafx-base-22-ea+11-sources.jar!/com/sun/javafx/property/PropertyReference.java</url>
-          <line>165</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

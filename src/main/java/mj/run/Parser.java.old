@@ -9,6 +9,9 @@ import mj.impl.Tab;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 
 
@@ -42,10 +45,11 @@ public class Parser {
    */
   private static final int MAX_LOCALS = 127;
 
-
   public final Tab tab = new Tab(this);
 
   private Obj curMethod = Tab.noObj;
+
+  private final Map<Obj, Ident> methods = new HashMap<>();
 
   private char parseChar(String val) {
 
@@ -195,7 +199,13 @@ public class Parser {
 		Expect(4);
 		Expect(3);
 		Obj prog = tab.insert(Obj.Kind.Prog, t.val, Tab.noType);
-		prog.setLine(t.line);
+		program = new Ident(t.line, prog);
+		Obj chr = tab.find("chr");
+		methods.put(chr, new Ident(0, chr));
+		Obj ord = tab.find("ord");
+		methods.put(ord, new Ident(0, ord));
+		Obj len = tab.find("len");
+		methods.put(len, new Ident(0, len));
 		tab.openScope();
 		while (la.kind == 3 || la.kind == 7 || la.kind == 11) {
 			if (la.kind == 7) {
@@ -214,10 +224,10 @@ public class Parser {
 		Expect(6);
 		Obj main = tab.curScope.findGlobal("main");
 		if (main == null || main.kind != Obj.Kind.Meth) { SemErr("method main not found"); }
-		prog.setMain(new CallStat(t.line, main));
+		((Ident)program).setMain(new CallStat(0, methods.get(main)));
+		((Ident)program).setMethods(methods.values().stream().collect(Collectors.toList()));
 		prog.locals = tab.curScope.locals();
 		tab.closeScope();
-		program = prog;
 		return program;
 	}
 
@@ -227,7 +237,6 @@ public class Parser {
 		type = Type();
 		Expect(3);
 		Obj con = tab.insert(Obj.Kind.Con, t.val, type);
-		con.setLine(t.line);
 		Expect(8);
 		if (la.kind == 1) {
 			if (!type.equals(Tab.intType)) { SemErr("value does not match constant type"); }
@@ -243,16 +252,13 @@ public class Parser {
 
 	void VarDecl() {
 		Struct type;
-		Obj var;
 		type = Type();
 		Expect(3);
-		var = tab.insert(Obj.Kind.Var, t.val, type);
-		var.setLine(t.line);
+		tab.insert(Obj.Kind.Var, t.val, type);
 		while (la.kind == 10) {
 			Get();
 			Expect(3);
-			var = tab.insert(Obj.Kind.Var, t.val, type);
-			var.setLine(t.line);
+			tab.insert(Obj.Kind.Var, t.val, type);
 		}
 		Expect(9);
 	}
@@ -261,7 +267,6 @@ public class Parser {
 		Expect(11);
 		Expect(3);
 		Obj clazz = tab.insert(Obj.Kind.Type, t.val, new Struct(Struct.Kind.Class));
-		clazz.setLine(t.line);
 		Expect(5);
 		tab.openScope();
 		while (la.kind == 3) {
@@ -285,7 +290,8 @@ public class Parser {
 		Expect(3);
 		String methodName = t.val;
 		curMethod = tab.insert(Obj.Kind.Meth, methodName, type);
-		curMethod.setLine(t.line);
+		Ident method = new Ident(t.line, curMethod);
+		methods.put(curMethod, method);
 		tab.openScope();
 		Expect(13);
 		if (la.kind == 3) {
@@ -300,9 +306,10 @@ public class Parser {
 		while (la.kind == 3) {
 			VarDecl();
 		}
+		if (tab.curScope.nVars() > MAX_LOCALS) { SemErr("too many local variables"); }
 		curMethod.locals = tab.curScope.locals();
 		block = Block(false);
-		curMethod.block = (Block)block;
+		method.setBlock((Block)block);
 		tab.closeScope();
 	}
 
@@ -326,13 +333,11 @@ public class Parser {
 		type = Type();
 		Expect(3);
 		param = tab.insert(Obj.Kind.Var, t.val, type);
-		param.setLine(t.line);
 		while (la.kind == 10) {
 			Get();
 			type = Type();
 			Expect(3);
 			param = tab.insert(Obj.Kind.Var, t.val, type);
-			param.setLine(t.line);
 		}
 	}
 
@@ -353,7 +358,7 @@ public class Parser {
 
 	Stat  Statement(boolean inLoop) {
 		Stat  node;
-		node = new StatError();
+		node = null;
 		Operator op;
 		Expr expr;
 		Expr cond;
@@ -375,12 +380,12 @@ public class Parser {
 				op = Assignop();
 				lineOfOp = t.line;
 				expr = Expr();
-				if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.getObj().name); }
+				if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.getIdent().getObj().name); }
 				if (op == Operator.ASSIGN) {
 				 if (!expr.type.assignableTo(var.type)) { SemErr("incompatible types"); }
 				}
 				else {
-				 if (var.type != Tab.intType || var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
+				 if (var.type != Tab.intType || expr.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
 				}
 				switch (op) {
 				 case ASSIGN:
@@ -404,7 +409,7 @@ public class Parser {
 				}
 			} else if (la.kind == 13) {
 				param = ActPars(var);
-				node = new CallStat(lineOfCall, var, param);
+				node = new CallStat(lineOfCall, methods.get(var.getIdent().getObj()), param);
 			} else if (la.kind == 17) {
 				Get();
 				if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
@@ -612,16 +617,16 @@ public class Parser {
 
 	List<Expr>  ActPars(Designator designator) {
 		List<Expr>  param;
-		param = new ArrayList<Expr>();
+		param = new ArrayList<>();
 		Expr expr;
 		Obj meth;
 		Expect(13);
 		if (designator.kind != Expr.Kind.Meth) { SemErr("called object is not a method"); }
-		meth = designator.getObj();
+		meth = designator.getIdent().getObj();
 		int aPars = 0;
 		int fPars = meth.nPars;
 		Iterator<Obj> pars = meth.locals.values().iterator();
-		Obj fp = Tab.noObj;
+		Obj fp;
 		if (StartOf(3)) {
 			expr = Expr();
 			param.add(loadExpr(expr));
@@ -781,7 +786,7 @@ public class Parser {
 			if (la.kind == 13) {
 				if (expr.type == Tab.noType) { SemErr("invalid call of void method"); }
 				param = ActPars((Designator)expr);
-				expr = new Call(lineOfCall, (Designator) expr, param);
+				expr = new Call(lineOfCall, methods.get(((Designator)expr).getIdent().getObj()), param);
 			}
 		} else if (la.kind == 1) {
 			Get();
@@ -794,18 +799,19 @@ public class Parser {
 			lineOfNew = t.line;
 			Expect(3);
 			Obj obj = tab.find(t.val);
+			Ident ident = new Ident(t.line, obj);
 			Struct type = obj.type;
 			if (obj.kind != Obj.Kind.Type) { SemErr("type expected"); }
 			if (la.kind == 15) {
 				Get();
 				expr = Expr();
 				if (expr.type != Tab.intType) { SemErr("array size must be an integer"); }
-				expr = new NewArray(lineOfNew, obj, expr);
+				expr = new NewArray(lineOfNew, ident, expr);
 				Expect(16);
 			}
 			else {
 			 if (type.kind != Struct.Kind.Class) { SemErr("class type expected"); }
-			 expr = new New(lineOfNew, obj);
+			 expr = new New(lineOfNew, ident);
 			}
 		} else if (la.kind == 13) {
 			Get();
