@@ -10,14 +10,6 @@ public class CharRead extends Read {
     public CharRead(int line, Designator var) {
         super(line, var);
     }
-
-    @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = var.toDOTString(sb, name, count + 1);
-        return count;
-    }
     @Override
     public String getName() {
         return "CharRead";

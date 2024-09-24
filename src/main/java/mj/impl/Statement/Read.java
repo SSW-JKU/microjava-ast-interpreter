@@ -13,6 +13,13 @@ public abstract class Read extends Stat {
         this.var = var;
     }
     @Override
+    public int toDOTString(StringBuilder sb, String parentName, int count) {
+        super.toDOTString(sb, parentName, count);
+        String name = "node%d".formatted(count);
+        count = var.toDOTString(sb, name, count + 1);
+        return count;
+    }
+    @Override
     public TreeItem<Node> toTreeView() {
         TreeItem<Node> item = super.toTreeView();
         item.getChildren().add(var.toTreeView());
