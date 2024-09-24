@@ -18,6 +18,8 @@ public class ASTViewerApplication extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(ASTViewerController.class.getResourceAsStream("/jku.png"))));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 800);
         stage.setScene(scene);
+        ASTViewerController controller = fxmlLoader.getController();
+        controller.setStage(stage);
         stage.show();
     }
     public static void main(String[] args) {
