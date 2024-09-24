@@ -303,7 +303,7 @@ public class ASTViewerController {
                 sourceCode.add(scanner.nextLine());
             }
             int width = (int)Math.log10(sourceCode.size()) + 1;
-            String formatString = STR."%\{width}d:  %s";
+            String formatString = "%" + width + "d:  %s";
             for (int i = 0; i < sourceCode.size(); i++) {
                 listView.getItems().add(formatString.formatted(i+1, sourceCode.get(i)));
             }
