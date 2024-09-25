@@ -111,29 +111,25 @@ public class Ident extends Expr {
         }
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
 
         switch (obj.kind) {
             case Prog:
                 for (Ident method : methods) {
                     if (method.block != null) {
-                        count = method.toDOTString(sb, name, count + 1);
+                        method.toDOTString(sb, dotId);
                     }
                 }
                 break;
             case Meth:
                 if (block != null) {
-                    sb.append("subgraph cluster_%s {\n".formatted(name));
-                    count = block.toDOTString(sb, name, count + 1);
+                    sb.append("subgraph cluster_%s {\n".formatted(dotId));
+                    block.toDOTString(sb, dotId);
                     sb.append("}\n");
                 }
                 break;
-            default:
-                break;
         }
-        return count;
     }
     @Override
     public TreeItem<Node> toTreeView() {

@@ -19,14 +19,12 @@ public class Designator extends Expr {
         this.exprList = new ArrayList<>();
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = ident.toDOTString(sb, name, count + 1);
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        ident.toDOTString(sb, dotId);
         for (Expr expr : exprList) {
-            count = expr.toDOTString(sb, name, count + 1);
+            expr.toDOTString(sb, dotId);
         }
-        return count;
     }
     @Override
     public String getName() {

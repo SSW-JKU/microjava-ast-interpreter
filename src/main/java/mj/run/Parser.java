@@ -392,19 +392,19 @@ public class Parser {
 				     node = new Assignment(lineOfOp, var, loadExpr(expr));
 				     break;
 				 case PLUSAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.ADD ,loadExpr(expr)));
+				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.ADD, loadExpr(expr)));
 				     break;
 				 case MINUSAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.SUB ,loadExpr(expr)));
+				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.SUB, loadExpr(expr)));
 				     break;
 				 case TIMESAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.MUL ,loadExpr(expr)));
+				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.MUL, loadExpr(expr)));
 				     break;
 				 case SLASHAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.DIV ,loadExpr(expr)));
+				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.DIV, loadExpr(expr)));
 				     break;
 				 case REMAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.REM ,loadExpr(expr)));
+				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.REM, loadExpr(expr)));
 				     break;
 				}
 			} else if (la.kind == 13) {

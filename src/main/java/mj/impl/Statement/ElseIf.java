@@ -15,12 +15,10 @@ public class ElseIf extends Stat {
         this.else_ = else_;
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = if_.toDOTString(sb, name, count + 1);
-        count = else_.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        if_.toDOTString(sb, dotId);
+        else_.toDOTString(sb, dotId);
     }
     @Override
     public String getName() {

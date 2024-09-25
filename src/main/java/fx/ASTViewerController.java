@@ -34,12 +34,13 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 public class ASTViewerController {
     private boolean ctrlPressed = false;
     private final Object lock = new Object();
-    Stage stage;
-    File selectedFile;
-    double oldZoom;
-    String oldScroll;
-    AbstractSyntaxTree ast;
-    Thread watcherThread;
+    private Stage stage;
+    private File selectedFile;
+    private double oldZoom;
+    private String oldScroll;
+    private AbstractSyntaxTree ast;
+    private Thread runThread;
+    private Thread watcherThread;
     @FXML
     public WebView webView;
     @FXML
@@ -65,7 +66,12 @@ public class ASTViewerController {
     @FXML
     public void setStage(Stage stage) {
         this.stage = stage;
-        stage.setOnCloseRequest((_) -> watcherThread.interrupt());
+        stage.setOnCloseRequest((_) -> {
+            if (runThread != null) {
+                runThread.interrupt();
+            }
+            watcherThread.interrupt();
+        });
     }
     @FXML
     public void initialize() {
@@ -182,7 +188,6 @@ public class ASTViewerController {
     @FXML
     public void compile() {
         ast = new AbstractSyntaxTree(selectedFile.getAbsolutePath());
-
         if (ast.isCompiled()) {
             TreeItem<Node> item = ast.getRoot().toTreeView();
             treeView.setRoot(item);
@@ -197,10 +202,8 @@ public class ASTViewerController {
     }
     public void fillGlobalSymTab() {
         globalSymTab.getItems().clear();
-
         Interpreter interpreter = ast.getInterpreter();
         Ident program = (Ident)interpreter.getRoot();
-
         for (Obj obj : program.getObj().locals.values()) {
             if (obj.kind == Obj.Kind.Var) {
                 int value = interpreter.getData(obj.adr);
@@ -210,12 +213,9 @@ public class ASTViewerController {
         globalSymTab.refresh();
     }
     public void fillLocalSymTab() {
-
         localSymTab.getItems().clear();
-
         Interpreter interpreter = ast.getInterpreter();
         Ident curMethod = (Ident)interpreter.getCurMethod();
-
         if (curMethod != null) {
             locVarLabel.setText("Local Variables (%s)".formatted(curMethod.getObj().name));
             for (Obj obj : curMethod.getObj().locals.values()) {
@@ -242,7 +242,7 @@ public class ASTViewerController {
     }
     @FXML
     public void run() {
-        Thread thread = new Thread(() -> {
+        runThread = new Thread(() -> {
             try {
                 ast.run();
                 ast.setDebug(false, null);
@@ -255,7 +255,7 @@ public class ASTViewerController {
                 throw new RuntimeException(e);
             }
         });
-        thread.start();
+        runThread.start();
     }
     @FXML
     public void zoom(ScrollEvent event) {

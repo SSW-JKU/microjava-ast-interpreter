@@ -17,12 +17,10 @@ public class NewArray extends Expr {
         this.expr = expr;
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = ident.toDOTString(sb, name, count + 1);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        ident.toDOTString(sb, dotId);
+        expr.toDOTString(sb, dotId);
     }
     @Override
     public String getName() {

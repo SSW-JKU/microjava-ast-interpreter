@@ -22,11 +22,9 @@ public abstract class Print extends Stat {
         this(line, expr, 0);
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        expr.toDOTString(sb, dotId);
     }
     @Override
     public void execute(Interpreter interpreter) throws ControlFlowException {
