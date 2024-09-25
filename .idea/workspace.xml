@@ -6,32 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/BinExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/BinExpr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadElem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadElem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadFld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadFld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/UnaryExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/UnaryExpr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Assignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Assignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/ElseIf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/ElseIf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/If.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/If.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Print.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Print.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Read.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Read.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Return.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Return.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/While.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/While.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/ASTMicroJava.atg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/ASTMicroJava.atg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java.old" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/Parser.java.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727221402081</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactor toDOTSTring(...) method">
+      <option name="closed" value="true" />
+      <created>1727286056891</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727286056891</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,7 +183,8 @@
     <MESSAGE value="Set setOnCloseRequest event on stage to interrupt watcher thread on closing" />
     <MESSAGE value="Set stage in controller instance" />
     <MESSAGE value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
+    <MESSAGE value="Refactor toDOTSTring(...) method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor toDOTSTring(...) method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

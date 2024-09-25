@@ -75,10 +75,6 @@ public class ASTViewerController {
     }
     @FXML
     public void initialize() {
-
-        openFile();
-        compile();
-
         setSymTabCellFactory(globalSymTab);
         setSymTabCellFactory(localSymTab);
 

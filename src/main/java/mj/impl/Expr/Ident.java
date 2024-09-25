@@ -79,6 +79,9 @@ public class Ident extends Expr {
                 block.execute(interpreter);
                 interpreter.setCurMethod(caller);
                 break;
+            case Con:
+                interpreter.push(obj.val);
+                break;
             case Var:
                 int adr;
                 int idx;
@@ -102,9 +105,6 @@ public class Ident extends Expr {
                     default:
                         break;
                 }
-                break;
-            case Con:
-                interpreter.push(obj.val);
                 break;
             default:
                 throw new IllegalArgumentException("Kind not implemented");
