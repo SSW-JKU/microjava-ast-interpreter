@@ -6,13 +6,11 @@ import mj.impl.Exceptions.ControlFlowException;
 import java.io.*;
 
 public class AbstractSyntaxTree {
-
     public static final String TREE_FILENAME = "tree.dot";
     public static final String SVG_FILENAME = "tree.svg";
     public final String filename;
     private Interpreter interpreter;
     private final boolean compileError;
-
     public AbstractSyntaxTree(String filename) {
         this.filename = filename;
 

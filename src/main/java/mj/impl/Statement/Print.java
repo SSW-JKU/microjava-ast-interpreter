@@ -7,12 +7,10 @@ import mj.impl.Node;
 import mj.run.Interpreter;
 
 public abstract class Print extends Stat {
-
-    Expr expr;
-    int width;
-    int val;
-    char ch;
-
+    private final Expr expr;
+    protected final int width;
+    protected int val;
+    protected char ch;
     public Print(int line, Expr expr, int width) {
         super(line);
         this.expr = expr;

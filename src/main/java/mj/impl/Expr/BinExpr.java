@@ -8,18 +8,15 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class BinExpr extends Expr {
-
-    Expr left;
-    Expr right;
-    Operator op;
-
+    private final Expr left;
+    private final Expr right;
+    private final Operator op;
 
     public BinExpr(int line, Expr left, Operator op, Expr right) {
         super(line, Tab.intType, 0, Kind.Con);
         this.left = left;
         this.op = op;
         this.right = right;
-
     }
     @Override
     public void toDOTString(StringBuilder sb, String parentName) {

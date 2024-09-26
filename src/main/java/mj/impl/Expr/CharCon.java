@@ -5,10 +5,8 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class CharCon extends Expr {
-
-    String value;
-    char ch;
-
+    private final String value;
+    private final char ch;
     public CharCon(int line, String value, char ch) {
         super(line, Tab.charType, 0, Kind.Con);
         this.value = value;

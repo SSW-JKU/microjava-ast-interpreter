@@ -6,12 +6,10 @@ import mj.run.AbstractSyntaxTree;
 import mj.run.Interpreter;
 
 public abstract class Node {
-    int line;
-    boolean isBreakpoint;
+    private int line;
+    private boolean isBreakpoint;
     protected final String dotId;
     private static int count = 0;
-
-
     public Node(int line) {
         this.line = line;
         this.dotId = "node%d".formatted(count);

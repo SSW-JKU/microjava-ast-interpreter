@@ -9,11 +9,9 @@ import mj.impl.Operator;
 import mj.run.Interpreter;
 
 public class BinOpAssignment extends Stat {
-
-    Designator var;
-    Operator op;
-    Expr expr;
-
+    private final Designator var;
+    private final Operator op;
+    private final Expr expr;
     public BinOpAssignment(int line, Designator var, Operator op, Expr expr) {
         super(line);
         this.var = var;

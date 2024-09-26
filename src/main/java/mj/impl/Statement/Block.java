@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Block extends Stat {
-
-    List<Stat> statList;
-
+    private final List<Stat> statList;
     public Block(int line) {
         super(line);
         statList = new ArrayList<>();

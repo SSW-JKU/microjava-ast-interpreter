@@ -4,12 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="Implement toDOTString, getName and toTreeView methods in BinOpAssignment">
+    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fx/TabItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/TabItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/BinExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/BinExpr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Call.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/CharCon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/CharCon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Designator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Expr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/IntCon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/IntCon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadElem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadElem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadFld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/LoadFld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/New.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/NewArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/UnaryExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/UnaryExpr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Operator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Assignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Assignment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/BinOpAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/BinOpAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Break.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Break.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CallStat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CharRead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/CharRead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/ElseIf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/ElseIf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/If.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/If.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/IntRead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/IntRead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Print.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Print.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Read.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Read.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Return.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Return.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Semicolon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Semicolon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Stat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/Stat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/While.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/While.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/run/AbstractSyntaxTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
     </list>
@@ -166,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727286056891</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Implement toDOTString, getName and toTreeView methods in BinOpAssignment">
+      <option name="closed" value="true" />
+      <created>1727360339765</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727360339765</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

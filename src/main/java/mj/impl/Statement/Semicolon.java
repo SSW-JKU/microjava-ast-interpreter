@@ -1,7 +1,6 @@
 package mj.impl.Statement;
 
 public class Semicolon extends Stat {
-
     public Semicolon(int line) {
         super(line);
     }

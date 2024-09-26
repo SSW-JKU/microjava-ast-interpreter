@@ -12,7 +12,6 @@ import java.util.List;
 public class Designator extends Expr {
     private final Ident ident;
     private final List<Expr> exprList;
-
     public Designator(int line, Ident ident) {
         super(line, ident.type, ident.offset, ident.kind);
         this.ident = ident;

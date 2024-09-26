@@ -5,7 +5,6 @@ import mj.impl.Exceptions.ControlFlowException;
 import mj.run.Interpreter;
 
 public class Break extends Stat {
-
     public Break(int line) {
         super(line);
     }

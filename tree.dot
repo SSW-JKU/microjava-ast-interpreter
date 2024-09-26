@@ -1,5 +1,25 @@
 digraph G {
 node0 [label = "Program (TestSideEffect)", color = "black"]
+node0 -> node4
+node4 [label = "Method (foo)", color = "black"]
+subgraph cluster_node4 {
+node4 -> node5
+node5 [label = "Block", color = "black"]
+node5 -> node10
+node10 [label = "BinOpAssignment (+=)", color = "black"]
+node10 -> node7
+node7 [label = "Designator (Kind: Static)", color = "black"]
+node7 -> node6
+node6 [label = "Var (global)", color = "black"]
+node10 -> node9
+node9 [label = "IntCon (1)", color = "black"]
+node5 -> node15
+node15 [label = "Return", color = "black"]
+node15 -> node14
+node14 [label = "Designator (Kind: Static)", color = "black"]
+node14 -> node13
+node13 [label = "Var (global)", color = "black"]
+}
 node0 -> node16
 node16 [label = "Method (main)", color = "black"]
 subgraph cluster_node16 {
@@ -35,45 +55,39 @@ node33 -> node32
 node32 [label = "Var (arr [arr])", color = "black"]
 node33 -> node37
 node37 [label = "Call foo", color = "black"]
-node17 -> node46
-node46 [label = "IntPrint (width = 0)", color = "black"]
-node46 -> node45
-node45 [label = "LoadElem", color = "black"]
-node45 -> node42
-node42 [label = "Designator (Kind: Elem)", color = "black"]
-node42 -> node41
-node41 [label = "Var (arr [arr])", color = "black"]
-node42 -> node44
-node44 [label = "IntCon (0)", color = "black"]
-node17 -> node53
-node53 [label = "IntPrint (width = 0)", color = "black"]
-node53 -> node52
-node52 [label = "LoadElem", color = "black"]
-node52 -> node49
-node49 [label = "Designator (Kind: Elem)", color = "black"]
-node49 -> node48
-node48 [label = "Var (arr [arr])", color = "black"]
-node49 -> node51
-node51 [label = "IntCon (1)", color = "red"]
-}
-node0 -> node4
-node4 [label = "Method (foo)", color = "black"]
-subgraph cluster_node4 {
-node4 -> node5
-node5 [label = "Block", color = "black"]
-node5 -> node10
-node10 [label = "BinOpAssignment (+=)", color = "black"]
-node10 -> node7
-node7 [label = "Designator (Kind: Static)", color = "black"]
-node7 -> node6
-node6 [label = "Var (global)", color = "black"]
-node10 -> node9
-node9 [label = "IntCon (1)", color = "black"]
-node5 -> node15
-node15 [label = "Return", color = "black"]
-node15 -> node14
-node14 [label = "Designator (Kind: Static)", color = "black"]
-node14 -> node13
-node13 [label = "Var (global)", color = "black"]
+node17 -> node44
+node44 [label = "IntRead", color = "black"]
+node44 -> node41
+node41 [label = "Designator (Kind: Elem)", color = "black"]
+node41 -> node40
+node40 [label = "Var (arr [arr])", color = "black"]
+node41 -> node43
+node43 [label = "IntCon (0)", color = "black"]
+node17 -> node51
+node51 [label = "IntPrint (width = 0)", color = "black"]
+node51 -> node50
+node50 [label = "LoadElem", color = "black"]
+node50 -> node47
+node47 [label = "Designator (Kind: Elem)", color = "black"]
+node47 -> node46
+node46 [label = "Var (arr [arr])", color = "black"]
+node47 -> node49
+node49 [label = "IntCon (0)", color = "black"]
+node17 -> node58
+node58 [label = "IntPrint (width = 0)", color = "black"]
+node58 -> node57
+node57 [label = "LoadElem", color = "black"]
+node57 -> node54
+node54 [label = "Designator (Kind: Elem)", color = "black"]
+node54 -> node53
+node53 [label = "Var (arr [arr])", color = "black"]
+node54 -> node56
+node56 [label = "IntCon (1)", color = "black"]
+node17 -> node59
+node59 [label = "Semicolon", color = "black"]
+node17 -> node60
+node60 [label = "Semicolon", color = "black"]
+node17 -> node61
+node61 [label = "Semicolon", color = "black"]
 }
 }

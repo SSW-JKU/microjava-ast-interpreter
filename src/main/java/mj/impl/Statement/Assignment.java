@@ -8,10 +8,8 @@ import mj.impl.Node;
 import mj.run.Interpreter;
 
 public class Assignment extends Stat {
-
-    Designator var;
-    Expr expr;
-
+    private final Designator var;
+    private final Expr expr;
     public Assignment(int line, Designator var, Expr expr) {
         super(line);
         this.var = var;

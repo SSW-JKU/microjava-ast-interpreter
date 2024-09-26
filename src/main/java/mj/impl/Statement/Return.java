@@ -8,9 +8,7 @@ import mj.impl.Node;
 import mj.run.Interpreter;
 
 public class Return extends Stat {
-
-    Expr expr;
-
+    private final Expr expr;
     public Return(int line, Expr expr) {
         super(line);
         this.expr = expr;

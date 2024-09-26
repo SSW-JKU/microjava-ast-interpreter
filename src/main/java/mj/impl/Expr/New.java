@@ -7,9 +7,7 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class New extends Expr {
-
-    Ident ident;
-
+    private final Ident ident;
     public New(int line, Ident ident) {
         super(line, ident==null? Tab.noType:ident.type, 0, Kind.Con);
         this.ident = ident;

@@ -8,9 +8,8 @@ import mj.impl.Node;
 import mj.run.Interpreter;
 
 public class While extends Stat {
-
-    Expr cond;
-    Stat stat;
+    private final Expr cond;
+    private final Stat stat;
     public While(int line, Expr cond, Stat stat) {
         super(line);
         this.cond = cond;

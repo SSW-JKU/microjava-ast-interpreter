@@ -5,8 +5,7 @@ import mj.impl.Expr.Designator;
 import mj.impl.Node;
 
 public abstract class Read extends Stat {
-    Designator var;
-
+    protected final Designator var;
     public Read(int line, Designator var) {
         super(line);
         this.var = var;

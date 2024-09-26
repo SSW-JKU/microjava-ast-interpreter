@@ -7,9 +7,7 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class LoadElem extends Expr {
-
-    Expr expr;
-
+    private final Expr expr;
     public LoadElem(int line, Expr expr) {
         super(line, expr==null? Tab.noType:expr.type, 0, Expr.Kind.None);
         this.expr = expr;

@@ -6,9 +6,8 @@ import mj.impl.Node;
 import mj.run.Interpreter;
 
 public class ElseIf extends Stat {
-    If if_;
-    Stat else_;
-
+    private final If if_;
+    private final Stat else_;
     public ElseIf(int line, If if_, Stat else_) {
         super(line);
         this.if_ = if_;

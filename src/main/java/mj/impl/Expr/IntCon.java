@@ -5,10 +5,8 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class IntCon extends Expr {
-
-    String strVal;
-    int val;
-
+    private final String strVal;
+    private final int val;
     public IntCon(int line, String strVal) {
         super(line, Tab.intType, 0, Kind.Con);
         this.strVal = strVal;

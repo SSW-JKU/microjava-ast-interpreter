@@ -13,12 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Ident extends Expr {
-
     private final Obj obj;
     private Node main;
-    private  Block block;
+    private Block block;
     private List<Ident> methods;
-
     public Ident(int line, Obj obj, Kind kind) {
         super(line, obj==null? Tab.noType:obj.type, obj==null? 0:obj.adr, kind);
         this.obj = obj;

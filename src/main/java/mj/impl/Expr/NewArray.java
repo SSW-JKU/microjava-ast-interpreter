@@ -8,9 +8,8 @@ import mj.run.Interpreter;
 import mj.symtab.Struct;
 
 public class NewArray extends Expr {
-    Ident ident;
-    Expr expr;
-
+    private final Ident ident;
+    private final Expr expr;
     public NewArray(int line, Ident ident, Expr expr) {
         super(line, ident==null? Tab.noType:new Struct(ident.type), 0, Kind.Con);
         this.ident = ident;

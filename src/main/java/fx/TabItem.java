@@ -3,13 +3,11 @@ package fx;
 import mj.impl.Obj;
 
 public class TabItem {
-
-    Obj obj;
-    String value;
-
+    private final Obj obj;
+    private final String val;
     public TabItem(Obj obj, String value) {
         this.obj = obj;
-        this.value = value;
+        this.val = value;
     }
     public TabItem(Obj obj, int value) {
         this(obj, String.valueOf(value));
@@ -22,7 +20,7 @@ public class TabItem {
         return obj.type.toString();
     }
     public String getValue() {
-        return value;
+        return val;
     }
 
 

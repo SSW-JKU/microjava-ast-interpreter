@@ -12,8 +12,7 @@ import mj.run.Interpreter;
 import java.util.List;
 
 public class CallStat extends Stat {
-    Call methodToCall;
-
+    private final Call methodToCall;
     public CallStat(int line, Ident methodToCall, List<Expr> param) {
         super(line);
         this.methodToCall = new Call(line, methodToCall, param);

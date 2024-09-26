@@ -8,10 +8,8 @@ import mj.impl.Tab;
 import mj.run.Interpreter;
 
 public class UnaryExpr extends Expr {
-
-    Expr expr;
-    Operator op;
-
+    private final Expr expr;
+    private final Operator op;
     public UnaryExpr(int line, Operator op, Expr expr) {
         super(line, Tab.intType, 0, Kind.Con);
         this.op = op;

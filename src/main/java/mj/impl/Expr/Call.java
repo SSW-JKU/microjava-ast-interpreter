@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Call extends Expr {
-
     private final Ident methodToCall;
     private final List<Expr> paras;
-
     public Call(int line, Ident methodToCall) {
         super(line, methodToCall == null? Tab.noType : methodToCall.type, 0, Kind.Meth);
         this.methodToCall = methodToCall;

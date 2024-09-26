@@ -10,11 +10,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class ASTViewerApplication extends Application {
-
-    FXMLLoader fxmlLoader;
     @Override
     public void start(Stage stage) throws IOException {
-        this.fxmlLoader = new FXMLLoader(ASTViewerApplication.class.getResource("ast-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ASTViewerApplication.class.getResource("ast-view.fxml"));
         stage.getIcons().add(new Image(Objects.requireNonNull(ASTViewerController.class.getResourceAsStream("/jku.png"))));
         Scene scene = new Scene(fxmlLoader.load(), 1600, 800);
         stage.setScene(scene);
