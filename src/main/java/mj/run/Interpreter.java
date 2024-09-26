@@ -2,8 +2,8 @@ package mj.run;
 
 import mj.impl.Exceptions.ControlFlowException;
 import mj.impl.Expr.Designator;
+import mj.impl.Expr.Ident;
 import mj.impl.Node;
-import mj.impl.Obj;
 
 public class Interpreter {
 
@@ -20,12 +20,12 @@ public class Interpreter {
     private final Node program;
     private boolean debug;
     private Object lock;
-    private Obj curMethod;
+    private Node curMethod;
     private int lineOfExecution;
 
     public Interpreter(Node program) {
         this.program = program;
-        this.data = new int[((Obj)program).getDataSize()];
+        this.data = new int[((Ident)program).getDataSize()];
         this.heap = new int[heapSize];
         this.stack = new int[eStackSize];
         this.local = new int[mStackSize];
@@ -48,7 +48,7 @@ public class Interpreter {
         }
         System.out.println("\n----------------------------------\n");
     }
-    public void assign(Designator var, int val) throws ControlFlowException {
+    public void assign(Designator var, int val) {
 
         int adr;
         int idx;
@@ -61,7 +61,6 @@ public class Interpreter {
                 setData(var.offset, val);
                 break;
             case Fld:
-                var.execute(this);
                 adr = pop();
                 if (adr == 0) {
                     throw new IllegalStateException("null reference used");
@@ -69,7 +68,6 @@ public class Interpreter {
                 setHeap(adr + var.offset, val);
                 break;
             case Elem:
-                var.execute(this);
                 idx = pop();
                 adr = pop();
                 if (adr == 0) {
@@ -194,10 +192,10 @@ public class Interpreter {
     public Object getLock() {
         return this.lock;
     }
-    public Obj getCurMethod() {
+    public Node getCurMethod() {
         return curMethod;
     }
-    public void setCurMethod(Obj callee) {
+    public void setCurMethod(Node callee) {
         curMethod = callee;
     }
     public int getLineOfExecution() {

@@ -19,13 +19,11 @@ public class Return extends Stat {
         this(line, null);
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
         if (expr != null) {
-            String name = "node%d".formatted(count);
-            count = expr.toDOTString(sb, name, count + 1);
+            expr.toDOTString(sb, dotId);
         }
-        return count;
     }
     @Override
     public String getName() {

@@ -5,7 +5,6 @@ import mj.impl.Expr.Designator;
 import mj.impl.Node;
 
 public abstract class Read extends Stat {
-
     Designator var;
 
     public Read(int line, Designator var) {
@@ -13,11 +12,9 @@ public abstract class Read extends Stat {
         this.var = var;
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = var.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        var.toDOTString(sb, dotId);
     }
     @Override
     public TreeItem<Node> toTreeView() {

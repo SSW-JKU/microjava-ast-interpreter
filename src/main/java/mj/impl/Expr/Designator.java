@@ -3,7 +3,6 @@ package mj.impl.Expr;
 import javafx.scene.control.TreeItem;
 import mj.impl.Exceptions.ControlFlowException;
 import mj.impl.Node;
-import mj.impl.Obj;
 import mj.run.Interpreter;
 
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Designator extends Expr {
-    Ident ident;
-    List<Expr> exprList;
+    private final Ident ident;
+    private final List<Expr> exprList;
 
     public Designator(int line, Ident ident) {
         super(line, ident.type, ident.offset, ident.kind);
@@ -20,14 +19,12 @@ public class Designator extends Expr {
         this.exprList = new ArrayList<>();
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = ident.toDOTString(sb, name, count + 1);
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        ident.toDOTString(sb, dotId);
         for (Expr expr : exprList) {
-            count = expr.toDOTString(sb, name, count + 1);
+            expr.toDOTString(sb, dotId);
         }
-        return count;
     }
     @Override
     public String getName() {
@@ -57,7 +54,7 @@ public class Designator extends Expr {
     public boolean canBeAssignedTo() {
         return EnumSet.of(Kind.Local, Kind.Static, Kind.Fld, Kind.Elem).contains(kind);
     }
-    public Obj getObj() {
-        return ident.getVar();
+    public Ident getIdent() {
+        return ident;
     }
 }

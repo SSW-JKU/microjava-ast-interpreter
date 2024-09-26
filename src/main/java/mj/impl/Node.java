@@ -6,21 +6,25 @@ import mj.run.AbstractSyntaxTree;
 import mj.run.Interpreter;
 
 public abstract class Node {
-
     int line;
     boolean isBreakpoint;
+    protected final String dotId;
+    private static int count = 0;
+
 
     public Node(int line) {
         this.line = line;
+        this.dotId = "node%d".formatted(count);
+        count++;
         isBreakpoint = false;
     }
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        String name = "node%d".formatted(count);
+    public void toDOTString(StringBuilder sb, String parentName) {
         //link to parent
-        sb.append("%s -> %s\n".formatted(parentName, name));
+        if (!parentName.equals("")) {
+            sb.append("%s -> %s\n".formatted(parentName, dotId));
+        }
         //introduce node
-        sb.append("%s [label = \"%s\", color = \"%s\"]\n".formatted(name, getName(), isBreakpoint? "red":"black"));
-        return count;
+        sb.append("%s [label = \"%s\", color = \"%s\"]\n".formatted(dotId, getName(), isBreakpoint? "red":"black"));
     }
     public abstract String getName();
     public void execute(Interpreter interpreter) throws ControlFlowException {
@@ -58,4 +62,5 @@ public abstract class Node {
     public boolean isCurrentBreakpoint() {
         return isBreakpoint;
     }
+
 }

@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mj.impl.Exceptions.ControlFlowException;
+import mj.impl.Expr.Ident;
 import mj.impl.Node;
 import mj.impl.Obj;
 import mj.run.AbstractSyntaxTree;
@@ -31,15 +32,15 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 public class ASTViewerController {
-
     private boolean ctrlPressed = false;
     private final Object lock = new Object();
-    Stage stage;
-    File selectedFile;
-    double oldZoom;
-    String oldScroll;
-    AbstractSyntaxTree ast;
-    Thread watcherThread;
+    private Stage stage;
+    private File selectedFile;
+    private double oldZoom;
+    private String oldScroll;
+    private AbstractSyntaxTree ast;
+    private Thread runThread;
+    private Thread watcherThread;
     @FXML
     public WebView webView;
     @FXML
@@ -65,7 +66,12 @@ public class ASTViewerController {
     @FXML
     public void setStage(Stage stage) {
         this.stage = stage;
-        stage.setOnCloseRequest((_) -> watcherThread.interrupt());
+        stage.setOnCloseRequest((_) -> {
+            if (runThread != null) {
+                runThread.interrupt();
+            }
+            watcherThread.interrupt();
+        });
     }
     @FXML
     public void initialize() {
@@ -171,12 +177,13 @@ public class ASTViewerController {
         runButton.setDisable(true);
         debugButton.setDisable(true);
         stepButton.setDisable(false);
+        treeView.refresh();
+        listView.refresh();
         run();
     }
     @FXML
     public void compile() {
         ast = new AbstractSyntaxTree(selectedFile.getAbsolutePath());
-
         if (ast.isCompiled()) {
             TreeItem<Node> item = ast.getRoot().toTreeView();
             treeView.setRoot(item);
@@ -191,11 +198,9 @@ public class ASTViewerController {
     }
     public void fillGlobalSymTab() {
         globalSymTab.getItems().clear();
-
         Interpreter interpreter = ast.getInterpreter();
-        Obj program = (Obj)interpreter.getRoot();
-
-        for (Obj obj : program.locals.values()) {
+        Ident program = (Ident)interpreter.getRoot();
+        for (Obj obj : program.getObj().locals.values()) {
             if (obj.kind == Obj.Kind.Var) {
                 int value = interpreter.getData(obj.adr);
                 globalSymTab.getItems().add(new TabItem(obj, value));
@@ -204,19 +209,17 @@ public class ASTViewerController {
         globalSymTab.refresh();
     }
     public void fillLocalSymTab() {
-
         localSymTab.getItems().clear();
-
         Interpreter interpreter = ast.getInterpreter();
-        Obj curMethod = interpreter.getCurMethod();
-
+        Ident curMethod = (Ident)interpreter.getCurMethod();
         if (curMethod != null) {
-            locVarLabel.setText("Local Variables (%s)".formatted(curMethod.name));
-            for (Obj obj : curMethod.locals.values()) {
+            locVarLabel.setText("Local Variables (%s)".formatted(curMethod.getObj().name));
+            for (Obj obj : curMethod.getObj().locals.values()) {
                 int value = interpreter.getLocal(obj.adr);
                 localSymTab.getItems().add(new TabItem(obj, value));
             }
-        } else {
+        }
+        else {
             locVarLabel.setText("Local Variables");
         }
         localSymTab.refresh();
@@ -235,7 +238,7 @@ public class ASTViewerController {
     }
     @FXML
     public void run() {
-        Thread thread = new Thread(() -> {
+        runThread = new Thread(() -> {
             try {
                 ast.run();
                 ast.setDebug(false, null);
@@ -243,11 +246,12 @@ public class ASTViewerController {
                 runButton.setDisable(false);
                 debugButton.setDisable(false);
                 stepButton.setDisable(true);
+
             } catch (ControlFlowException e) {
                 throw new RuntimeException(e);
             }
         });
-        thread.start();
+        runThread.start();
     }
     @FXML
     public void zoom(ScrollEvent event) {

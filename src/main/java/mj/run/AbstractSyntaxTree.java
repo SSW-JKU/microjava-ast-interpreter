@@ -46,13 +46,15 @@ public class AbstractSyntaxTree {
                 interpreter.printMethodStack();
                 interpreter.printExpressionStack();
             }
+            writeASTToFile(interpreter.getRoot());
+            interpreter.setLineOfExecution(0);
         }
     }
     public static void writeASTToFile(Node root) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("digraph G {\n");
-        root.toDOTString(sb, "", 0);
+        root.toDOTString(sb, "");
         sb.append("}");
 
         try (FileWriter writer = new FileWriter(TREE_FILENAME)) {

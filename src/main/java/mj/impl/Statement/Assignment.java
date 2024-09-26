@@ -18,12 +18,10 @@ public class Assignment extends Stat {
         this.expr = expr;
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = var.toDOTString(sb, name, count + 1);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        var.toDOTString(sb, dotId);
+        expr.toDOTString(sb, dotId);
     }
     @Override
     public String getName() {
@@ -34,6 +32,9 @@ public class Assignment extends Stat {
         super.execute(interpreter);
         expr.execute(interpreter);
         int val = interpreter.pop();
+        if (var.kind == Expr.Kind.Elem || var.kind == Expr.Kind.Fld) {
+            var.execute(interpreter);
+        }
         interpreter.assign(var, val);
     }
     @Override

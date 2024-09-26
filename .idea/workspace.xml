@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,15 +129,62 @@
       <option name="project" value="LOCAL" />
       <updated>1727180017459</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Set setOnCloseRequest event on stage to interrupt watcher thread on closing">
+      <option name="closed" value="true" />
+      <created>1727181099309</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727181099309</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Set stage in controller instance">
+      <option name="closed" value="true" />
+      <created>1727181139490</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727181139490</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Removed Obj class from Node inheritance hierarchy and update all effected code parts">
+      <option name="closed" value="true" />
+      <created>1727221402081</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727221402081</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactor toDOTSTring(...) method">
+      <option name="closed" value="true" />
+      <created>1727286056891</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727286056891</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="AST interpreter" />
     <MESSAGE value="Generalize toDOTString method to super class Read" />
     <MESSAGE value="Generalize toDOTString method to super class Print" />
-    <option name="LAST_COMMIT_MESSAGE" value="Generalize toDOTString method to super class Print" />
+    <MESSAGE value="Set setOnCloseRequest event on stage to interrupt watcher thread on closing" />
+    <MESSAGE value="Set stage in controller instance" />
+    <MESSAGE value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
+    <MESSAGE value="Refactor toDOTSTring(...) method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor toDOTSTring(...) method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -157,11 +201,6 @@
             <option name="lambda-ordinal" value="-1" />
           </properties>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/22-ea+11/javafx-base-22-ea+11-sources.jar!/com/sun/javafx/property/PropertyReference.java</url>
-          <line>165</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

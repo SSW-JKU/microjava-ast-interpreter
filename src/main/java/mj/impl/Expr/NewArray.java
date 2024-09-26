@@ -3,28 +3,24 @@ package mj.impl.Expr;
 import javafx.scene.control.TreeItem;
 import mj.impl.Exceptions.ControlFlowException;
 import mj.impl.Node;
-import mj.impl.Obj;
 import mj.impl.Tab;
 import mj.run.Interpreter;
 import mj.symtab.Struct;
 
 public class NewArray extends Expr {
-
-    Obj obj;
+    Ident ident;
     Expr expr;
 
-    public NewArray(int line, Obj obj, Expr expr) {
-        super(line, obj==null? Tab.noType:new Struct(obj.type), 0, Kind.Con);
-        this.obj = obj;
+    public NewArray(int line, Ident ident, Expr expr) {
+        super(line, ident==null? Tab.noType:new Struct(ident.type), 0, Kind.Con);
+        this.ident = ident;
         this.expr = expr;
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = obj.toDOTString(sb, name, count + 1);
-        count = expr.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        ident.toDOTString(sb, dotId);
+        expr.toDOTString(sb, dotId);
     }
     @Override
     public String getName() {
@@ -43,7 +39,7 @@ public class NewArray extends Expr {
     @Override
     public TreeItem<Node> toTreeView() {
         TreeItem<Node> item = super.toTreeView();
-        item.getChildren().add(obj.toTreeView());
+        item.getChildren().add(ident.toTreeView());
         item.getChildren().add(expr.toTreeView());
         return item;
     }

@@ -13,19 +13,19 @@ public class BinExpr extends Expr {
     Expr right;
     Operator op;
 
+
     public BinExpr(int line, Expr left, Operator op, Expr right) {
         super(line, Tab.intType, 0, Kind.Con);
         this.left = left;
         this.op = op;
         this.right = right;
+
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
-        count = left.toDOTString(sb, name, count + 1);
-        count = right.toDOTString(sb, name, count + 1);
-        return count;
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        left.toDOTString(sb, dotId);
+        right.toDOTString(sb, dotId);
     }
     @Override
     public String getName() {

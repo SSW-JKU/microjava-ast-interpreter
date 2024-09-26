@@ -18,13 +18,11 @@ public class LoadFld extends Expr {
         this(line, null, adr);
     }
     @Override
-    public int toDOTString(StringBuilder sb, String parentName, int count) {
-        super.toDOTString(sb, parentName, count);
-        String name = "node%d".formatted(count);
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
         if (expr != null) {
-            count = expr.toDOTString(sb, name, count + 1);
+             expr.toDOTString(sb, dotId);
         }
-        return count;
     }
     @Override
     public String getName() {
