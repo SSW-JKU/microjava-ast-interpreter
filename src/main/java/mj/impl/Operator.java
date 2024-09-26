@@ -3,6 +3,7 @@ package mj.impl;
 public enum Operator {
     NOOP("NOOP"), ADD("+"), SUB("-"), MUL("*"), DIV("/"), REM("%"), ASSIGN("="),
     PLUSAS("+="), MINUSAS("-="), TIMESAS("*="), SLASHAS("/="), REMAS("%="), EXP("**"),
+    PPLUS("++"), MMINUS("--"),
     EQL("=="), NEQ("!="), LSS("<"), LEQ("<="), GTR(">"), GEQ(">="), AND("&&"),
     OR("||");
 

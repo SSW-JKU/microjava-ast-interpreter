@@ -13,11 +13,13 @@ public class BinExpr extends Expr {
     Expr right;
     Operator op;
 
+
     public BinExpr(int line, Expr left, Operator op, Expr right) {
         super(line, Tab.intType, 0, Kind.Con);
         this.left = left;
         this.op = op;
         this.right = right;
+
     }
     @Override
     public void toDOTString(StringBuilder sb, String parentName) {

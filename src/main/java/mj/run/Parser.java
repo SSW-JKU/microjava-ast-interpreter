@@ -392,19 +392,11 @@ public class Parser {
 				     node = new Assignment(lineOfOp, var, loadExpr(expr));
 				     break;
 				 case PLUSAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.ADD, loadExpr(expr)));
-				     break;
 				 case MINUSAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.SUB, loadExpr(expr)));
-				     break;
 				 case TIMESAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.MUL, loadExpr(expr)));
-				     break;
 				 case SLASHAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.DIV, loadExpr(expr)));
-				     break;
 				 case REMAS:
-				     node = new Assignment(lineOfOp, var, new BinExpr(lineOfOp, loadExpr(var), Operator.REM, loadExpr(expr)));
+				     node = new BinOpAssignment(lineOfOp, var, op, loadExpr(expr));
 				     break;
 				}
 			} else if (la.kind == 13) {
@@ -414,12 +406,12 @@ public class Parser {
 				Get();
 				if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
 				if (var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
-				node = new Assignment(t.line, var, new BinExpr(t.line, loadExpr(var), Operator.ADD, new IntCon(t.line, 1)));
+				node = new BinOpAssignment(t.line, var, Operator.PPLUS, new IntCon(t.line, 1));
 			} else if (la.kind == 18) {
 				Get();
 				if (!var.canBeAssignedTo()) { SemErr("cannot store to operand kind " + var.kind); }
 				if (var.type != Tab.intType) { SemErr("operand(s) must be of type int"); }
-				node = new Assignment(t.line, var, new BinExpr(t.line, loadExpr(var), Operator.SUB, new IntCon(t.line, 1)));
+				node = new BinOpAssignment(t.line, var, Operator.MMINUS, new IntCon(t.line, 1));
 			} else SynErr(50);
 			Expect(9);
 			break;

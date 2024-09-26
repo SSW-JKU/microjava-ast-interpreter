@@ -48,7 +48,7 @@ public class Interpreter {
         }
         System.out.println("\n----------------------------------\n");
     }
-    public void assign(Designator var, int val) throws ControlFlowException {
+    public void assign(Designator var, int val) {
 
         int adr;
         int idx;
@@ -61,7 +61,6 @@ public class Interpreter {
                 setData(var.offset, val);
                 break;
             case Fld:
-                var.execute(this);
                 adr = pop();
                 if (adr == 0) {
                     throw new IllegalStateException("null reference used");
@@ -69,7 +68,6 @@ public class Interpreter {
                 setHeap(adr + var.offset, val);
                 break;
             case Elem:
-                var.execute(this);
                 idx = pop();
                 adr = pop();
                 if (adr == 0) {

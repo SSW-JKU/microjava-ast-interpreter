@@ -58,7 +58,7 @@ public class Obj {
    * Only for Meth / Prog: List of local variables / global declarations.
    */
   public Map<String, Obj> locals = Collections.emptyMap();
-
+  
   public Obj(Kind kind, String name, Struct type) {
     this.kind = kind;
     this.name = name;

@@ -32,6 +32,9 @@ public class Assignment extends Stat {
         super.execute(interpreter);
         expr.execute(interpreter);
         int val = interpreter.pop();
+        if (var.kind == Expr.Kind.Elem || var.kind == Expr.Kind.Fld) {
+            var.execute(interpreter);
+        }
         interpreter.assign(var, val);
     }
     @Override
