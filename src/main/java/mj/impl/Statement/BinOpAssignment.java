@@ -1,8 +1,10 @@
 package mj.impl.Statement;
 
+import javafx.scene.control.TreeItem;
 import mj.impl.Exceptions.ControlFlowException;
 import mj.impl.Expr.Designator;
 import mj.impl.Expr.Expr;
+import mj.impl.Node;
 import mj.impl.Operator;
 import mj.run.Interpreter;
 
@@ -18,12 +20,22 @@ public class BinOpAssignment extends Stat {
         this.op = op;
         this.expr = expr;
     }
-
+    @Override
+    public void toDOTString(StringBuilder sb, String parentName) {
+        super.toDOTString(sb, parentName);
+        var.toDOTString(sb, dotId);
+        if (op != Operator.PPLUS && op != Operator.MMINUS) {
+            expr.toDOTString(sb, dotId);
+        }
+    }
+    @Override
+    public String getName() {
+        return "BinOpAssignment (%s)".formatted(op);
+    }
     @Override
     public void execute(Interpreter interpreter) throws ControlFlowException {
 
-        int adr, idx;
-        int val = 0;
+        int adr, idx, val;
 
         var.execute(interpreter);
         switch (var.kind) {
@@ -78,8 +90,12 @@ public class BinOpAssignment extends Stat {
         interpreter.assign(var, val);
     }
 
-    @Override
-    public String getName() {
-        return null;
+    public TreeItem<Node> toTreeView() {
+        TreeItem<Node> item = super.toTreeView();
+        item.getChildren().add(var.toTreeView());
+        if (op != Operator.PPLUS && op != Operator.MMINUS) {
+            item.getChildren().add(expr.toTreeView());
+        }
+        return item;
     }
 }

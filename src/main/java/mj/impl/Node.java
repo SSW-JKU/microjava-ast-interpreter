@@ -20,7 +20,7 @@ public abstract class Node {
     }
     public void toDOTString(StringBuilder sb, String parentName) {
         //link to parent
-        if (!parentName.equals("")) {
+        if (!parentName.isEmpty()) {
             sb.append("%s -> %s\n".formatted(parentName, dotId));
         }
         //introduce node

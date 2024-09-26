@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="">
+    <list default="true" id="6a4f1452-d6d1-40cd-a1fa-cce409aaacee" name="Changes" comment="Implement toDOTString, getName and toTreeView methods in BinOpAssignment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fx/ASTViewerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Expr/Ident.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/BinOpAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mj/impl/Statement/BinOpAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree.dot" beforeDir="false" afterPath="$PROJECT_DIR$/tree.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree.svg" beforeDir="false" afterPath="$PROJECT_DIR$/tree.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +189,8 @@
     <MESSAGE value="Set stage in controller instance" />
     <MESSAGE value="Removed Obj class from Node inheritance hierarchy and update all effected code parts" />
     <MESSAGE value="Refactor toDOTSTring(...) method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor toDOTSTring(...) method" />
+    <MESSAGE value="Implement toDOTString, getName and toTreeView methods in BinOpAssignment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement toDOTString, getName and toTreeView methods in BinOpAssignment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

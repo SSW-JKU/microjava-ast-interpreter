@@ -117,7 +117,7 @@ public class Ident extends Expr {
         switch (obj.kind) {
             case Prog:
                 for (Ident method : methods) {
-                    if (method != null) {
+                    if (method.block != null) {
                         method.toDOTString(sb, dotId);
                     }
                 }
